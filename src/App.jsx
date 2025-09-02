@@ -1,8 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MapaBairros from './components/MapaBairros';
-import DetalheBairro from './components/DetalheBairro';
-import './App.css'; // Importa o CSS do Leaflet
+import ClimApiTest from "./pages/ClimApiTest";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MapaBairros from "./pages/MapaBairros";
+import DetalheBairro from "./pages/DetalheBairro";
 
 function App() {
   return (
@@ -10,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MapaBairros />} />
         <Route path="/bairro/:nomeBairro" element={<DetalheBairro />} />
+        <Route path="/clima" element={<ClimApiTest />} />
       </Routes>
     </Router>
   );
