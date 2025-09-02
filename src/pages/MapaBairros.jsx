@@ -16,7 +16,6 @@ let DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-
 const bairros = [
     { nome: 'Centro', lat: -29.9667, lng: -51.6333 },
     { nome: 'Sul', lat: -29.9678, lng: -51.6250 },
@@ -32,10 +31,23 @@ const MapaBairros = () => {
         navigate(`/bairro/${bairroNome}`);
     };
 
+    const handleClimaClick = () => {
+        navigate('/clima');
+    };
+
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                gap: '1rem',
+            }}
+        >
             <MapContainer
-                center={[-29.9667, -51.6333]} 
+                center={[-29.9667, -51.6333]}
                 zoom={15}
                 style={{ height: '80vh', width: '80%' }}
             >
@@ -56,6 +68,21 @@ const MapaBairros = () => {
                     </Marker>
                 ))}
             </MapContainer>
+
+            {/* Botão para rota /clima */}
+            <button
+                onClick={handleClimaClick}
+                style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#007bff',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                }}
+            >
+                Ir para Clima
+            </button>
         </div>
     );
 };
