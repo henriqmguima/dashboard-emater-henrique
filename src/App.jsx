@@ -1,12 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
 import ClimApiTest from "./pages/ClimApiTest";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MapaBairros from "./pages/MapaBairros";
+import DetalheBairro from "./pages/DetalheBairro";
 
 function App() {
-  return <ClimApiTest />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MapaBairros />} />
+        <Route path="/bairro/:nomeBairro" element={<DetalheBairro />} />
+        <Route path="/clima" element={<ClimApiTest />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
