@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,14 +10,26 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
+import { useParams } from "react-router-dom";
 
-ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
+);
 
-export default function TestApi() {
+export default function TestApi({ bairros }) {
+  const { nomeBairro } = useParams();
+  const bairro = bairros.find((b) => b.nome === nomeBairro);
+
   const [variavel, setVariavel] = useState("dpt2m");
   const [dataExecucao, setDataExecucao] = useState("2025-08-30"); // formato YYYY-MM-DD
-  const [latitude, setLatitude] = useState("-29.7");
-  const [longitude, setLongitude] = useState("-51.5");
+  const [latitude, setLatitude] = useState(bairro.lat);
+  const [longitude, setLongitude] = useState(bairro.lng);
   const [dados, setDados] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -32,12 +44,18 @@ export default function TestApi() {
     { nome: "hcdchcll", descricao: "High cloud cover (%)" },
     { nome: "lcdclcll", descricao: "Low cloud cover (%)" },
     { nome: "mcdcmcll", descricao: "Medium cloud cover (%)" },
-    { nome: "pevprsfc", descricao: "Surface potential evaporation rate (mm/6h)" },
+    {
+      nome: "pevprsfc",
+      descricao: "Surface potential evaporation rate (mm/6h)",
+    },
     { nome: "rh2m", descricao: "2m relative humidity (%)" },
     { nome: "soill0_10cm", descricao: "Soil moisture 0–10cm (proportion)" },
     { nome: "soill10_40cm", descricao: "Soil moisture 10–40cm (proportion)" },
     { nome: "soill40_100cm", descricao: "Soil moisture 40–100cm (proportion)" },
-    { nome: "dswrfsfc", descricao: "Downward short wave radiation flux (W/m²)" },
+    {
+      nome: "dswrfsfc",
+      descricao: "Downward short wave radiation flux (W/m²)",
+    },
     { nome: "sunsdsfc", descricao: "Surface sunshine duration (s)" },
     { nome: "tmax2m", descricao: "2m maximum temperature (°C)" },
     { nome: "tmin2m", descricao: "2m minimum temperature (°C)" },
@@ -47,7 +65,7 @@ export default function TestApi() {
     { nome: "vgrd10m", descricao: "10m v-component of wind (m/s)" },
   ];
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     setDados(null);
@@ -68,17 +86,25 @@ export default function TestApi() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dataExecucao, latitude, longitude, variavel]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <div style={{ padding: "20px" }}>
       <h1>Teste ClimAPI</h1>
+      <h2>{nomeBairro}</h2>
 
       {/* Seleção de parâmetros */}
       <div style={{ marginBottom: "20px" }}>
         <label>
           Variável:{" "}
-          <select value={variavel} onChange={(e) => setVariavel(e.target.value)}>
+          <select
+            value={variavel}
+            onChange={(e) => setVariavel(e.target.value)}
+          >
             {variaveisDisponiveis.map((v) => (
               <option key={v.nome} value={v.nome}>
                 {v.nome} – {v.descricao}
@@ -97,30 +123,7 @@ export default function TestApi() {
           />
         </label>
         <br />
-
-        <label>
-          Latitude:{" "}
-          <input
-            type="text"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
-          />
-        </label>
-        <br />
-
-        <label>
-          Longitude:{" "}
-          <input
-            type="text"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-          />
-        </label>
       </div>
-
-      <button onClick={fetchData} disabled={loading}>
-        {loading ? "Carregando..." : "Buscar dados"}
-      </button>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 

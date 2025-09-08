@@ -1,15 +1,31 @@
 import ClimApiTest from "./pages/ClimApiTest";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MapaBairros from "./pages/MapaBairros";
-import DetalheBairro from "./pages/DetalheBairro";
+
+const bairros = [
+  {
+    nome: "IFSul - Câmpus Charqueadas",
+    lat: -29.9642251,
+    lng: -51.6290038,
+  },
+  {
+    nome: "Granja Käfer",
+    lat: -30.0412793,
+    lng: -51.6467932,
+  },
+  { nome: "Granja Carola", lat: -29.9554248, lng: -51.5556481 },
+  { nome: "Guaíba City", lat: -30.03435, lng: -51.5785155 },
+];
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MapaBairros />} />
-        <Route path="/bairro/:nomeBairro" element={<DetalheBairro />} />
-        <Route path="/clima" element={<ClimApiTest />} />
+        <Route path="/" element={<MapaBairros bairros={bairros} />} />
+        <Route
+          path="/clima/:nomeBairro"
+          element={<ClimApiTest bairros={bairros} />}
+        />
       </Routes>
     </Router>
   );
