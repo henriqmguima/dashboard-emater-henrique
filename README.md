@@ -31,3 +31,9 @@ O React Router DOM é a biblioteca padrão para gerenciar a navegação em aplic
 O OpenStreetMap (OSM) é uma fonte de dados de mapas gratuita e de código aberto, criada por uma comunidade global. É a "base" visual do mapa que aparece no seu projeto. Utilizamos os TileLayers do OSM, que são as "peças" de imagem do mapa, para preencher o fundo da sua aplicação. É uma alternativa excelente e gratuita a serviços como Google Maps ou Mapbox, que costumam cobrar pelo uso.
 
 Em resumo, a escolha dessas ferramentas foi baseada em uma combinação de fatores: elas são gratuitas, amplamente utilizadas na comunidade e se integram de forma coesa para oferecer uma solução completa e eficiente para o projeto.
+
+### Instalação de Pacotes
+`npm install`
+`npm install @phosphor-icons/react`
+`npm install react-router-dom`
+`npm install react-chartjs-2 chart.js`

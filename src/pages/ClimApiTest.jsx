@@ -27,7 +27,7 @@ export default function TestApi({ bairros }) {
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
   const [variavel, setVariavel] = useState("dpt2m");
-  const [dataExecucao, setDataExecucao] = useState("2025-08-30"); // formato YYYY-MM-DD
+  const [dataExecucao, setDataExecucao] = useState("2025-09-11"); // formato YYYY-MM-DD
   const [latitude, setLatitude] = useState(bairro.lat);
   const [longitude, setLongitude] = useState(bairro.lng);
   const [dados, setDados] = useState(null);
