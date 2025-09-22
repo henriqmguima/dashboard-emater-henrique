@@ -1,4 +1,4 @@
-import ClimApiTest from "./pages/ClimApiTest";
+import ClimApi from "./pages/ClimApi";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MapaBairros from "./pages/MapaBairros";
 
@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<MapaBairros bairros={bairros} />} />
         <Route
           path="/clima/:nomeBairro"
-          element={<ClimApiTest bairros={bairros} />}
+          element={<ClimApi bairros={bairros} />}
         />
       </Routes>
     </Router>

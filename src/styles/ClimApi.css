@@ -1,0 +1,21 @@
+.layout-emater {
+    display: flex;
+    flex-direction: column;
+    /* Header em cima */
+    min-height: 100vh;
+}
+
+/* Parte de baixo: aside + conteúdo */
+.layout-inferior {
+    display: flex;
+    flex: 1;
+}
+
+/* Aside fixo na lateral esquerda */
+.conteudo-principal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #c8d1bb;
+    /* só pra destacar, pode trocar */
+}

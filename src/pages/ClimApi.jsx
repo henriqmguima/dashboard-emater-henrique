@@ -11,6 +11,10 @@ import {
   LineElement,
 } from "chart.js";
 import { useParams } from "react-router-dom";
+import Header from "../components/Header";
+import Aside from "../components/Aside";
+import "../styles/ClimApi.css";
+
 
 ChartJS.register(
   Title,
@@ -22,12 +26,13 @@ ChartJS.register(
   LineElement
 );
 
-export default function TestApi({ bairros }) {
+export default function ClimApi({ bairros }) {
+
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
   const [variavel, setVariavel] = useState("dpt2m");
-  const [dataExecucao, setDataExecucao] = useState("2025-09-11"); // formato YYYY-MM-DD
+  const [dataExecucao, setDataExecucao] = useState("2025-09-22"); // formato YYYY-MM-DD
   const [latitude, setLatitude] = useState(bairro.lat);
   const [longitude, setLongitude] = useState(bairro.lng);
   const [dados, setDados] = useState(null);
@@ -93,67 +98,79 @@ export default function TestApi({ bairros }) {
   }, [fetchData]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Teste ClimAPI</h1>
-      <h2>{nomeBairro}</h2>
+    <div className="layout-emater">
+      <Header />
+      <div className="layout-inferior">
+        <Aside />
+        <div className="conteudo-principal">
 
-      {/* Seleção de parâmetros */}
-      <div style={{ marginBottom: "20px" }}>
-        <label>
-          Variável:{" "}
-          <select
-            value={variavel}
-            onChange={(e) => setVariavel(e.target.value)}
-          >
-            {variaveisDisponiveis.map((v) => (
-              <option key={v.nome} value={v.nome}>
-                {v.nome} – {v.descricao}
-              </option>
-            ))}
-          </select>
-        </label>
-        <br />
 
-        <label>
-          Data de execução:{" "}
-          <input
-            type="date"
-            value={dataExecucao}
-            onChange={(e) => setDataExecucao(e.target.value)}
-          />
-        </label>
-        <br />
-      </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {/* Renderiza o gráfico */}
-      {dados && (
-        <div style={{ marginTop: "30px" }}>
-          <Line
-            data={{
-              labels: dados.map((d) => d.horas),
-              datasets: [
-                {
-                  label: variavel,
-                  data: dados.map((d) => d.valor),
-                  borderColor: "blue",
-                  backgroundColor: "lightblue",
-                },
-              ],
-            }}
-            options={{
-              responsive: true,
-              plugins: {
-                title: {
-                  display: true,
-                  text: `Previsão para ${variavel} em ${latitude}, ${longitude}`,
-                },
-              },
-            }}
-          />
+          <div style={{ padding: "20px" }}>
+            <h1>ClimAPI</h1>
+            <h2>{nomeBairro}</h2>
+
+            {/* Seleção de parâmetros */}
+            <div style={{ marginBottom: "20px" }}>
+              <label>
+                Variável:{" "}
+                <select
+                  value={variavel}
+                  onChange={(e) => setVariavel(e.target.value)}
+                >
+                  {variaveisDisponiveis.map((v) => (
+                    <option key={v.nome} value={v.nome}>
+                      {v.nome} – {v.descricao}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <br />
+
+              <label>
+                Data de execução:{" "}
+                <input
+                  type="date"
+                  value={dataExecucao}
+                  onChange={(e) => setDataExecucao(e.target.value)}
+                />
+              </label>
+              <br />
+            </div>
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            {/* Renderiza o gráfico */}
+            {dados && (
+              <div className="grafico" style={{ marginTop: "30px" }}>
+                <Line
+                  data={{
+                    labels: dados.map((d) => d.horas),
+                    datasets: [
+                      {
+                        label: variavel,
+                        data: dados.map((d) => d.valor),
+                        borderColor: "#33A02C",
+                        backgroundColor: "#A5D01B",
+                      },
+                    ],
+                  }}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      title: {
+                        display: true,
+                        text: `Previsão para ${variavel} em ${latitude}, ${longitude}`,
+                      },
+                    },
+                  }}
+                />
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
