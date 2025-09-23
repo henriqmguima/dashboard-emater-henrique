@@ -9,8 +9,8 @@
 }
 
 .header-emater h1 {
-    margin: 0;
-    font-size: 22px;
+    margin: 0 10px 0 70px;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -34,24 +34,29 @@
     gap: 10px;
 }
 
-.input-header {
-    padding: 8px 14px;
+.input-header,
+.input-data,
+.input-variavel {
+    appearance: none;
+    /* remove seta padrão */
+    padding: 10px 14px;
+    padding-right: 40px;
+    /* espaço para a setinha custom */
     border: 2px solid #73bf86;
-    /* verde suave */
     border-radius: 8px;
     background-color: #ffffff;
     color: #233806;
-    /* verde escuro */
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.3s ease;
-    outline: none;
     cursor: pointer;
-    min-width: 160px;
+    outline: none;
+    transition: all 0.3s ease;
 }
 
 /* efeito de foco */
-.input-header:focus {
+.input-header:focus,
+.input-data:focus,
+.input-variavel:focus {
     border-color: #1B8211;
     /* verde forte */
     box-shadow: 0 0 6px rgba(165, 208, 27, 0.6);
@@ -60,16 +65,149 @@
 
 /* select personalizado */
 .input-header select,
-.input-header option {
+.input-variavel select {
+    appearance: none;
+
+    width: 100%;
+    padding: 10px 40px 10px 14px;
+    /* espaço para a seta */
+    border: 2px solid #73bf86;
+    border-radius: 8px;
     background-color: #fff;
     color: #233806;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
 }
 
-/* efeito ao passar o mouse */
-.input-header:hover {
+/* hover */
+.input-header select:hover,
+.input-variavel select:hover {
     border-color: #14510e;
 }
 
+/* foco */
+.input-header select:focus,
+.input-variavel select:focus {
+    border-color: #1B8211;
+    box-shadow: 0 0 6px rgba(165, 208, 27, 0.6);
+    outline: none;
+}
+
+/* opções */
+.input-header option,
+.input-variavel option {
+    background-color: #fff;
+    color: #233806;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+
+/* efeito ao passar o mouse */
+.input-header:hover,
+.input-data:hover,
+.input-variavel:hover {
+    border-color: #14510e;
+}
+
+/* Dropdown custom */
+.dropdown {
+    position: relative;
+    min-width: 320px;
+    font-size: 14px;
+}
+
+.dropdown-selected {
+    padding: 10px 14px;
+    border: 2px solid #73bf86;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    color: #233806;
+    transition: all 0.3s;
+}
+
+
+/* Dropdown list básico */
+.dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 2.5px;
+    right: 0;
+    border-radius: 0 0 8px 8px;
+    background-color: #1B8211;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* <-- evita barra horizontal */
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 300px;
+    border: 2px solid #73bf86;
+    border-top: none;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Fade + slide + bounce */
+.dropdown-anim-enter {
+    opacity: 0;
+    transform: translateY(-20px) scaleY(0.95);
+}
+
+.dropdown-anim-enter-active {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    transition: transform 350ms cubic-bezier(0.25, 1.25, 0.5, 1), opacity 350ms ease;
+
+}
+
+.dropdown-anim-exit {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+}
+
+.dropdown-anim-exit-active {
+    opacity: 0;
+    transform: translateY(-20px) scaleY(0.95);
+    transition: transform 300ms ease-in, opacity 300ms ease-in;
+}
+
+/* Itens do dropdown */
+.dropdown-item {
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-radius: 4px;
+}
+
+.dropdown-item:hover {
+    background-color: #a5d01b;
+    color: #233806;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* sombra dinâmica */
+    transform: translateX(5px);
+    /* leve movimento ao passar o mouse */
+}
+
+
+
+/* Responsividade */
+@media (max-width: 600px) {
+
+    .dropdown-selected,
+    .dropdown-item {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+}
 
 /* ASIDE */
 .aside-emater {

@@ -20,3 +20,11 @@
     color: #fff;
     /* só pra destacar, pode trocar */
 }
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 500px;
+    margin-bottom: 30px;
+}

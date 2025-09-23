@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Aside from "../components/Aside";
 import "../styles/ClimApi.css";
+import "../styles/Layout.css";
 
 
 ChartJS.register(
@@ -112,10 +113,10 @@ export default function ClimApi({ bairros }) {
             <h2>{nomeBairro}</h2>
 
             {/* Seleção de parâmetros */}
-            <div style={{ marginBottom: "20px" }}>
+            <div style={{ marginBottom: "50px" }} className="inputs">
               <label>
                 Variável:{" "}
-                <select
+                <select className="input-variavel"
                   value={variavel}
                   onChange={(e) => setVariavel(e.target.value)}
                 >
@@ -130,7 +131,7 @@ export default function ClimApi({ bairros }) {
 
               <label>
                 Data de execução:{" "}
-                <input
+                <input className="input-data"
                   type="date"
                   value={dataExecucao}
                   onChange={(e) => setDataExecucao(e.target.value)}
