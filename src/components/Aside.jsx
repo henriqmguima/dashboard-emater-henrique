@@ -9,10 +9,10 @@ export default function Aside() {
     const location = useLocation();
 
     const opcoes = [
-        { icon: <Thermometer size={40} />, rota: "temperatura" },
-        { icon: <CloudSun size={40} />, rota: "nuvens" },
-        { icon: <Drop size={40} />, rota: "agua" },
-        { icon: <PresentationChart size={40} />, rota: "dados" }
+        { icon: <Thermometer size={50} />, rota: "temperatura" },
+        { icon: <CloudSun size={50} />, rota: "nuvens" },
+        { icon: <Drop size={50} />, rota: "agua" },
+        { icon: <PresentationChart size={50} />, rota: "dados" }
     ];
 
     // Se ainda não houver parametro (por exemplo renderização inicial), evita crash
