@@ -61,21 +61,22 @@
     color: #a5d01b;
     font-size: 24px;
     border-radius: 10px;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .aside-item:hover {
     background-color: #233806;
+    transform: scale(1.05);
     color: #d2ed78;
 }
 
 .aside-item.ativo {
-    background-color: #5eba67;
-    color: #d2ed78;
+    background-color: #a5d01b;
+    color: #2a410a;
 }
 
 .aside-item.ativo:hover {
-    background-color: #4aa556;
+    background-color: #cee975;
 }
 
 .aside-footer {

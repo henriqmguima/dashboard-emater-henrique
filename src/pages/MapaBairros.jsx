@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-import "../styles/MapaBairros.css"; // importa seu CSS personalizado
+import "../styles/MapaBairros.css";
 import { MapPinPlus, ThermometerHot, Wind, CloudSun, ChartBar } from "@phosphor-icons/react";
 
 // Configuração do ícone padrão do Leaflet
@@ -17,26 +17,29 @@ let DefaultIcon = L.icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 });
-// Array de atalhos com texto do botão e nome real do bairro
+
 const atalhos = [
   { label: "IFSUL", bairroNome: "IFSul - Câmpus Charqueadas" },
   { label: "GRANJA KAFER", bairroNome: "Granja Käfer" },
   { label: "GRANJA CAROLA", bairroNome: "Granja Carola" },
   { label: "GUAIBA CITY", bairroNome: "Guaíba City" },
 ];
+
 const icones = [
   <ThermometerHot size={50} />,
   <Wind size={50} />,
   <CloudSun size={50} />,
-  <ChartBar size={50} /> // reutilizando ChartBar para o último
+  <ChartBar size={50} />
 ];
+
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const MapaBairros = ({ bairros }) => {
   const navigate = useNavigate();
 
+  // Agora já manda para a rota padrão: temperatura
   const irParaBairro = (nome) => {
-    navigate(`/clima/${nome}`);
+    navigate(`/clima/${nome}/temperatura`);
   };
 
   return (
@@ -55,7 +58,8 @@ const MapaBairros = ({ bairros }) => {
           </div>
 
           <p className="paragrafo">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, fugiat unde, iusto quisquam quos sed illo quaerat repellat temporibus enim corrupti ratione quis soluta dignissimos blanditiis at fugit vel minima.          </p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, fugiat unde, iusto quisquam quos sed illo quaerat repellat temporibus enim corrupti ratione quis soluta dignissimos blanditiis at fugit vel minima.
+          </p>
 
           {/* Botões de atalho */}
           <div className="botoes-atalho">
@@ -70,7 +74,6 @@ const MapaBairros = ({ bairros }) => {
               </button>
             ))}
           </div>
-
         </div>
 
         {/* DIREITA - MAPA */}
