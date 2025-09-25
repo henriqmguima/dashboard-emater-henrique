@@ -109,5 +109,5 @@ th {
     .cards-container {
         grid-template-columns: 1fr;
         /* Uma coluna em telas menores (celular) */
-    }
+  }
 }

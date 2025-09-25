@@ -41,7 +41,7 @@ export default function ClimApi({ bairros }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "633e59b0-7eb5-3cfe-8ade-d8544f8fa24e";
+  const token = "8c4040d2-0e13-363b-b5b5-7703d6cef658";
 
   const fetchVariavel = async (variavel, data) => {
     const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
