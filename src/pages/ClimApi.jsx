@@ -40,7 +40,7 @@ export default function ClimApi({ bairros }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "633e59b0-7eb5-3cfe-8ade-d8544f8fa24e";
+  const token = "8c4040d2-0e13-363b-b5b5-7703d6cef658";
 
   // Lista de variáveis fornecidas pela API
   const variaveisDisponiveis = [
@@ -104,71 +104,119 @@ export default function ClimApi({ bairros }) {
       <div className="layout-inferior">
         <Aside />
         <div className="conteudo-principal">
+          <h2 className="titulo-bairro">{nomeBairro}</h2>
 
-
-
-
-          <div style={{ padding: "20px" }}>
-            <h1>ClimAPI</h1>
-            <h2>{nomeBairro}</h2>
-
-            {/* Seleção de parâmetros */}
-            <div style={{ marginBottom: "50px" }} className="inputs">
-              <label>
-                Variável:{" "}
-                <select className="input-variavel"
-                  value={variavel}
-                  onChange={(e) => setVariavel(e.target.value)}
-                >
-                  {variaveisDisponiveis.map((v) => (
-                    <option key={v.nome} value={v.nome}>
-                      {v.nome} – {v.descricao}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <br />
-
-              <label>
-                Data de execução:{" "}
-                <input className="input-data"
-                  type="date"
-                  value={dataExecucao}
-                  onChange={(e) => setDataExecucao(e.target.value)}
-                />
-              </label>
-              <br />
+          <div className="grid-clima">
+            {/* Temperatura atual (esquerda cima) */}
+            <div className="card card-temperatura">
+              <div className="card-header">
+                <h3>Temperatura atual</h3>
+                <span className="icon">🌡️</span>
+              </div>
+              <div className="card-info">
+                <span className="valor">22°C</span>
+                <span className="ponto-orvalho" style={{ color: "#A5D01B" }}>
+                  Ponto de orvalho: 18°C
+                </span>
+              </div>
+              <div className="card-grafico">
+                {dados ? (
+                  <Line
+                    data={{
+                      labels: dados.map((d) => d.horas),
+                      datasets: [
+                        {
+                          label: variavel,
+                          data: dados.map((d) => d.valor),
+                          borderColor: "#33A02C",
+                          backgroundColor: "#A5D01B",
+                        },
+                      ],
+                    }}
+                    options={{ responsive: true }}
+                  />
+                ) : (
+                  <p style={{ color: "#aaa", textAlign: "center" }}>Carregando dados...</p>
+                )}
+              </div>
             </div>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
-
-            {/* Renderiza o gráfico */}
-            {dados && (
-              <div className="grafico" style={{ marginTop: "30px" }}>
-                <Line
-                  data={{
-                    labels: dados.map((d) => d.horas),
-                    datasets: [
-                      {
-                        label: variavel,
-                        data: dados.map((d) => d.valor),
-                        borderColor: "#33A02C",
-                        backgroundColor: "#A5D01B",
-                      },
-                    ],
-                  }}
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      title: {
-                        display: true,
-                        text: `Previsão para ${variavel} em ${latitude}, ${longitude}`,
-                      },
-                    },
-                  }}
-                />
+            {/* Variação térmica (direita cima) */}
+            <div className="card card-variacao-termica">
+              <div className="card-header">
+                <h3>Variação Térmica</h3>
               </div>
-            )}
+              <div className="card-info spans-variacao">
+                <div>
+                  <span style={{ color: "#C4BE15" }}>26°C</span>
+                  <small>Máx (12:00)</small>
+                </div>
+                <div>
+                  <span style={{ color: "#19C388" }}>12°C</span>
+                  <small>Min (00:00)</small>
+                </div>
+                <div>
+                  <span style={{ color: "#60C034" }}>14°C</span>
+                  <small>Amplitude térmica</small>
+                </div>
+              </div>
+            </div>
+
+            {/* Probabilidade de Carvalho (esquerda baixo) */}
+            <div className="card card-carvalho">
+              <div className="card-header">
+                <h3>Probabilidade de Carvalho</h3>
+                <span className="icon" style={{ color: "#18D5A0" }}>💧</span>
+              </div>
+              <div className="card-info">
+                <span className="percentual" style={{ color: "#18D5A0" }}>80%</span>
+                <span className="condicoes" style={{ color: "#18D5A0" }}>
+                  Condições favoráveis (Temp. Min: 16°C | Ponto Orvalho: 18°C)
+                </span>
+              </div>
+              <div className="card-grafico">
+                {/* Placeholder do gráfico em barras */}
+                <div className="grafico-barras">[Gráfico de barras aqui]</div>
+              </div>
+            </div>
+
+            {/* Variação semanal (direita baixo) */}
+            <div className="card card-variacao-semanal">
+              <div className="card-header">
+                <h3>Variação Semanal</h3>
+                <span className="icon">🌡️</span>
+              </div>
+              <div className="card-info">
+                <span style={{ color: "#60C034" }}>23/09 | Ensolarado</span>
+                <small>Maior variação</small>
+              </div>
+              <div className="card-tabela">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Temp. Min.</th>
+                      <th>Temp. Máx.</th>
+                      <th>Variação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>23/09</td>
+                      <td>12°C</td>
+                      <td>26°C</td>
+                      <td>14°C</td>
+                    </tr>
+                    <tr>
+                      <td>24/09</td>
+                      <td>13°C</td>
+                      <td>25°C</td>
+                      <td>12°C</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

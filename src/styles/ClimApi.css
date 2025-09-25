@@ -28,3 +28,104 @@
     max-width: 500px;
     margin-bottom: 30px;
 }
+
+.grid-clima {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* esquerda / direita */
+    grid-template-rows: 1fr 1fr;
+    /* cima / baixo */
+    gap: 20px;
+}
+
+.card {
+    background: #243018;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.spans-variacao {
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-tabela table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.card-tabela th,
+.card-tabela td {
+    border: 1px solid #444;
+    padding: 6px;
+    text-align: center;
+}
+
+.titulo-bairro {
+    margin: 20px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.grid-clima {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* duas colunas */
+    grid-template-rows: auto auto;
+    /* duas linhas */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Define posição de cada card */
+.card-temperatura {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.card-variacao-termica {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.card-carvalho {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.card-variacao-semanal {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .grid-clima {
+        grid-template-columns: 1fr;
+        /* apenas uma coluna */
+        grid-template-rows: auto;
+    }
+
+    .card-temperatura,
+    .card-variacao-termica,
+    .card-carvalho,
+    .card-variacao-semanal {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
