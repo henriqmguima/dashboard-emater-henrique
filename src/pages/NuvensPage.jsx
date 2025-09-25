@@ -13,7 +13,7 @@ import {
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Aside from "../components/Aside";
-import "../styles/ClimApi.css";
+import "../styles/TempPage.css";
 
 
 ChartJS.register(
@@ -46,7 +46,7 @@ export default function NuvensPage({ bairros }) {
     { nome: "hcdchcll", descricao: "High cloud cover (%)" },
     { nome: "lcdclcll", descricao: "Low cloud cover (%)" },
     { nome: "mcdcmcll", descricao: "Medium cloud cover (%)" },
-    {nome: "pevprsfc",descricao: "Surface potential evaporation rate (mm/6h)",},
+    { nome: "pevprsfc", descricao: "Surface potential evaporation rate (mm/6h)", },
     { nome: "sunsdsfc", descricao: "Surface sunshine duration (s)" },
   ];
 
@@ -83,12 +83,8 @@ export default function NuvensPage({ bairros }) {
       <div className="layout-inferior">
         <Aside />
         <div className="conteudo-principal">
-
-
-
-
-          <div style={{ padding: "20px" }}>
-            <h1>ClimAPI</h1>
+          <div>
+            <h1>Nuvens e Sol</h1>
             <h2>{nomeBairro}</h2>
 
             {/* Seleção de parâmetros */}

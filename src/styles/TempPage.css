@@ -36,13 +36,14 @@
 /* --- Títulos --- */
 h1 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     color: var(--green-light);
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 30px;
     color: var(--green-medium);
 }
 
@@ -109,5 +110,5 @@ th {
     .cards-container {
         grid-template-columns: 1fr;
         /* Uma coluna em telas menores (celular) */
-  }
+    }
 }

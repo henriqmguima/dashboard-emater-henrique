@@ -14,7 +14,7 @@ import {
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Aside from "../components/Aside";
-import "../styles/ClimApi.css";
+import "../styles/TempPage.css";
 import "../styles/Layout.css";
 
 ChartJS.register(
@@ -28,7 +28,7 @@ ChartJS.register(
   BarElement
 );
 
-export default function ClimApi({ bairros }) {
+export default function TempPage({ bairros }) {
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
@@ -41,7 +41,7 @@ export default function ClimApi({ bairros }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "8c4040d2-0e13-363b-b5b5-7703d6cef658";
+  const token = "b8a4d3d4-a41c-37a7-96b4-667f96d443b5";
 
   const fetchVariavel = async (variavel, data) => {
     const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
@@ -135,7 +135,7 @@ export default function ClimApi({ bairros }) {
       <div className="layout-inferior">
         <Aside />
         <div className="conteudo-principal" style={{ padding: "20px" }}>
-          <h1>ClimAPI</h1>
+          <h1>Temperatura e Condição do Ar</h1>
           <h2>{nomeBairro}</h2>
 
           <label>
