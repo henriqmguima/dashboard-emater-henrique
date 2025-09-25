@@ -1,6 +1,7 @@
 import ClimApiTest from "./pages/ClimApiTest";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MapaBairros from "./pages/MapaBairros";
+import InmetApiTest from "./pages/InmetApiTest";
 
 const bairros = [
   {
@@ -26,6 +27,7 @@ function App() {
           path="/clima/:nomeBairro"
           element={<ClimApiTest bairros={bairros} />}
         />
+        <Route path="/api/inmet" element={<InmetApiTest />} />
       </Routes>
     </Router>
   );
