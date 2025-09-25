@@ -64,7 +64,7 @@ h5 {
     z-index: -1;
 }
 
-.titulo .emater {
+.emater {
     color: #a5d01b;
 }
 
@@ -80,7 +80,7 @@ h5 {
 
 .paragrafo {
     font-size: 1.2rem;
-    max-width: 40rem;
+    max-width: 60rem;
     line-height: 1.6;
 }
 
@@ -225,6 +225,22 @@ h5 {
 
 .footer p {
     justify-content: center;
+}
+
+@media (max-width: 1906px) {
+    .titulo {
+        font-size: 5rem;
+    }
+
+    .subtitulo {
+        font-size: 2rem;
+    }
+
+    .paragrafo {
+        font-size: 1.1rem;
+        max-width: 45rem;
+        text-align: justify;
+    }
 }
 
 /* Tablets em modo paisagem */

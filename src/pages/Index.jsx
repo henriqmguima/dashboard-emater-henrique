@@ -6,7 +6,7 @@ import L from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import "../styles/index.css";
-import { MapPinPlus, ThermometerHot, Wind, CloudSun, ChartBar } from "@phosphor-icons/react";
+import { MapPinPlus, ThermometerHot, Drop, CloudSun, ChartBar } from "@phosphor-icons/react";
 
 // Configuração do ícone padrão do Leaflet
 let DefaultIcon = L.icon({
@@ -27,8 +27,8 @@ const atalhos = [
 
 const icones = [
   <ThermometerHot size={50} />,
-  <Wind size={50} />,
   <CloudSun size={50} />,
+  <Drop size={50} />,
   <ChartBar size={50} />
 ];
 
@@ -58,7 +58,7 @@ const Index = ({ bairros }) => {
           </div>
 
           <p className="paragrafo">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, fugiat unde, iusto quisquam quos sed illo quaerat repellat temporibus enim corrupti ratione quis soluta dignissimos blanditiis at fugit vel minima.
+            A <strong className="emater">EMATER</strong> de <i>Charqueadas</i> auxilia os produtores rurais sobre importantes tomadas de decisão sobre as atividades do agronegócio. Eles atuam em toda a Zona Rural de <i>Charqueadas</i> e os agricultores confiam muito no trabalho da <strong className="emater">EMATER</strong>. Disponibilizar uma ferramenta tecnológica para <strong className="emater">EMATER</strong> é atender a uma comunidade que o câmpus jamais chegou, pois a <strong className="emater">EMATER</strong> tem a confiança do produtor.
           </p>
 
           {/* Botões de atalho */}
@@ -111,8 +111,8 @@ const Index = ({ bairros }) => {
         <div className="botoes-inferiores">
           {[
             "Variação térmica",
-            "Velocidade média do vento",
             "Cobertura de nuvens",
+            "Umidade do solo",
             "Apresentação com gráficos",
           ].map((titulo, i) => (
             <div key={i} className="botao-inferior">
