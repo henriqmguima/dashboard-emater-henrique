@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-import "../styles/MapaBairros.css";
+import "../styles/index.css";
 import { MapPinPlus, ThermometerHot, Wind, CloudSun, ChartBar } from "@phosphor-icons/react";
 
 // Configuração do ícone padrão do Leaflet
@@ -34,7 +34,7 @@ const icones = [
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const MapaBairros = ({ bairros }) => {
+const Index = ({ bairros }) => {
   const navigate = useNavigate();
 
   // Agora já manda para a rota padrão: temperatura
@@ -132,4 +132,4 @@ const MapaBairros = ({ bairros }) => {
   );
 };
 
-export default MapaBairros;
+export default Index;
