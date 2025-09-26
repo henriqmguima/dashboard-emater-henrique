@@ -8,10 +8,11 @@
     padding: 12px 20px;
 }
 
-.header-emater h1 {
+.header-title {
     margin: 0 10px 0 70px;
     font-size: 40px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .header-emater h1 span {

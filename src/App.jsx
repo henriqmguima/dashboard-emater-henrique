@@ -1,9 +1,9 @@
 // App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MapaBairros from "./pages/MapaBairros";
-import ClimApi from "./pages/ClimApi";
+import Index from "./pages/Index";
+import TempPage from "./pages/TempPage";
 import NuvensPage from "./pages/NuvensPage";
-
+import InmetApiTest from "./pages/InmetApiTest";
 
 const bairros = [
   { nome: "IFSul - Câmpus Charqueadas", lat: -29.9642251, lng: -51.6290038 },
@@ -17,12 +17,12 @@ function App() {
     <Router>
       <Routes>
         {/* Página inicial com o mapa */}
-        <Route path="/" element={<MapaBairros bairros={bairros} />} />
+        <Route path="/" element={<Index bairros={bairros} />} />
 
         {/* Rotas de clima específicas */}
         <Route
           path="/clima/:nomeBairro/temperatura"
-          element={<ClimApi bairros={bairros} />}
+          element={<TempPage bairros={bairros} />}
         />
         <Route
           path="/clima/:nomeBairro/nuvens"
@@ -32,6 +32,7 @@ function App() {
         {/* Futuras rotas comentadas */}
         {/* <Route path="/clima/:nomeBairro/agua" element={<AguaPage bairros={bairros} />} /> */}
         {/* <Route path="/clima/:nomeBairro/dados" element={<DadosPage bairros={bairros} />} /> */}
+        <Route path="/api/inmet" element={<InmetApiTest />} />
       </Routes>
     </Router>
   );

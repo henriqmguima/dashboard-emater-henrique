@@ -16,7 +16,7 @@ import {
 import Header from "../components/Header";
 import Aside from "../components/Aside";
 import GraphCanva from "../components/GraphCanva";
-import "../styles/ClimApi.css";
+import "../styles/TempPage.css";
 
 ChartJS.register(
   Title,
@@ -310,7 +310,6 @@ export default function NuvensPage({ bairros }) {
                 }} />
               </div>
             </div>
-
             {/* === Taxa de Evaporação === */}
             <div className="card">
               <h3>Taxa de Evaporação</h3>
