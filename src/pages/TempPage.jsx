@@ -257,7 +257,8 @@ export default function TempPage({ bairros }) {
                         y: {
                           beginAtZero: true,
                           suggestedMax: 110, // dá espaço para mostrar até 100% sem cortar
-                          ticks: { color: "#fff", font: { size: 12 } },
+                          ticks: { color: "#A5D01B", font: { size: 12 } },
+                          border: { color: "#A5D01B" },
                           grid: { display: false, drawBorder: false },
                         },
                       },

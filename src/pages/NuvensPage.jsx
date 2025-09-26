@@ -42,7 +42,7 @@ export default function NuvensPage({ bairros }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "8c4040d2-0e13-363b-b5b5-7703d6cef658";
+  const token = "b8a4d3d4-a41c-37a7-96b4-667f96d443b5";
 
   const variaveisDisponiveis = [
     { nome: "hcdchcll", descricao: "High cloud cover (%)" },
@@ -55,7 +55,7 @@ export default function NuvensPage({ bairros }) {
   // Paleta de cores
   const cores = {
     alta: "#647840",
-    media: "#60C034", 
+    media: "#60C034",
     baixa: "#B0D387",
     sol: "#15C788",
     perdido: "#C4BE15",
@@ -112,7 +112,7 @@ export default function NuvensPage({ bairros }) {
           const coberturaMedia = dadosDia.find(d => d.nome === "mcdcmcll")?.dados.reduce((acc, h) => acc + h.valor, 0) / dadosDia.find(d => d.nome === "mcdcmcll")?.dados.length || 0;
           const coberturaBaixa = dadosDia.find(d => d.nome === "lcdclcll")?.dados.reduce((acc, h) => acc + h.valor, 0) / dadosDia.find(d => d.nome === "lcdclcll")?.dados.length || 0;
           const coberturaTotal = coberturaAlta + coberturaMedia + coberturaBaixa;
-          
+
           semana.push({
             data: formatarData(data),
             horasSol: horasSol.toFixed(1),
@@ -153,7 +153,7 @@ export default function NuvensPage({ bairros }) {
   const totalHorasSol = horasSol.reduce((acc, h) => acc + h, 0).toFixed(1);
   const totalEvaporacao = taxaEvaporacao.reduce((acc, e) => acc + e, 0).toFixed(2);
   const mediaCobertura = (coberturaTotal.reduce((acc, c) => acc + c, 0) / coberturaTotal.length).toFixed(1);
-  
+
   const X = 6; // critério para dia ensolarado
   const isDiaEnsolarado = parseFloat(totalHorasSol) >= X;
 
@@ -166,7 +166,7 @@ export default function NuvensPage({ bairros }) {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { 
+      legend: {
         display: true,
         position: 'bottom',
         labels: { boxWidth: 12, fontSize: 10 }
@@ -186,7 +186,7 @@ export default function NuvensPage({ bairros }) {
         borderWidth: 2,
       },
       {
-        label: "Nuvens Médias", 
+        label: "Nuvens Médias",
         data: coberturaMedia,
         borderColor: cores.media,
         backgroundColor: cores.media + "40",
@@ -255,19 +255,19 @@ export default function NuvensPage({ bairros }) {
               <p style={{ fontSize: '24px', margin: '5px 0', color: cores.sol }}><strong>{totalHorasSol}h</strong></p>
               <small>de 12h possíveis</small>
             </div>
-            
+
             <div className="card" style={{ textAlign: 'center', padding: '15px' }}>
               <h4>☁️ Cobertura Média</h4>
               <p style={{ fontSize: '24px', margin: '5px 0', color: cores.media }}><strong>{mediaCobertura}%</strong></p>
               <small>nuvens no céu</small>
             </div>
-            
+
             <div className="card" style={{ textAlign: 'center', padding: '15px' }}>
               <h4>💧 Evaporação</h4>
               <p style={{ fontSize: '24px', margin: '5px 0', color: cores.evap }}><strong>{totalEvaporacao}mm</strong></p>
               <small>total do dia</small>
             </div>
-            
+
             <div className="card" style={{ textAlign: 'center', padding: '15px' }}>
               <h4>📊 Classificação</h4>
               <p style={{ fontSize: '18px', margin: '5px 0' }}>
@@ -310,6 +310,7 @@ export default function NuvensPage({ bairros }) {
                 }} />
               </div>
             </div>
+
             {/* === Taxa de Evaporação === */}
             <div className="card">
               <h3>Taxa de Evaporação</h3>
@@ -332,7 +333,7 @@ export default function NuvensPage({ bairros }) {
                   ...opcoesCompactas,
                   plugins: {
                     ...opcoesCompactas.plugins,
-                    legend: { 
+                    legend: {
                       display: true,
                       position: 'bottom'
                     }
@@ -349,35 +350,35 @@ export default function NuvensPage({ bairros }) {
           <div className="card" style={{ marginTop: '20px' }}>
             <h3>📅 Histórico Semanal Detalhado</h3>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ 
-                width: '100%', 
+              <table style={{
+                width: '100%',
                 borderCollapse: 'collapse',
                 fontSize: '14px',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
               }}>
                 <thead>
-                  <tr style={{ 
-                    backgroundColor: '#2c3e50', 
+                  <tr style={{
+                    backgroundColor: '#2c3e50',
                     color: 'white',
                     fontWeight: 'bold'
                   }}>
-                    <th style={{ 
-                      padding: '12px 15px', 
+                    <th style={{
+                      padding: '12px 15px',
                       border: '1px solid #34495e',
                       textAlign: 'left'
                     }}>Data</th>
-                    <th style={{ 
-                      padding: '12px 15px', 
+                    <th style={{
+                      padding: '12px 15px',
                       border: '1px solid #34495e',
                       textAlign: 'center'
                     }}>Horas de Sol</th>
-                    <th style={{ 
-                      padding: '12px 15px', 
+                    <th style={{
+                      padding: '12px 15px',
                       border: '1px solid #34495e',
                       textAlign: 'center'
                     }}>Cobertura Média (%)</th>
-                    <th style={{ 
-                      padding: '12px 15px', 
+                    <th style={{
+                      padding: '12px 15px',
                       border: '1px solid #34495e',
                       textAlign: 'center'
                     }}>Classificação</th>
@@ -385,37 +386,37 @@ export default function NuvensPage({ bairros }) {
                 </thead>
                 <tbody>
                   {dadosSemana.map((dia, i) => (
-                    <tr key={i} style={{ 
+                    <tr key={i} style={{
                       backgroundColor: i % 2 === 0 ? '#ecf0f1' : '#ffffff',
                       transition: 'background-color 0.2s ease',
                       cursor: 'pointer'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#d5dbdb'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = i % 2 === 0 ? '#ecf0f1' : '#ffffff'}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#d5dbdb'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = i % 2 === 0 ? '#ecf0f1' : '#ffffff'}
                     >
-                      <td style={{ 
-                        padding: '10px 15px', 
+                      <td style={{
+                        padding: '10px 15px',
                         border: '1px solid #bdc3c7',
                         fontWeight: '500',
                         color: '#2c3e50'
                       }}>{dia.data}</td>
-                      <td style={{ 
-                        padding: '10px 15px', 
-                        border: '1px solid #bdc3c7', 
+                      <td style={{
+                        padding: '10px 15px',
+                        border: '1px solid #bdc3c7',
                         textAlign: 'center',
                         color: parseFloat(dia.horasSol) >= 6 ? '#27ae60' : '#e74c3c',
                         fontWeight: 'bold'
                       }}>{dia.horasSol}h</td>
-                      <td style={{ 
-                        padding: '10px 15px', 
-                        border: '1px solid #bdc3c7', 
+                      <td style={{
+                        padding: '10px 15px',
+                        border: '1px solid #bdc3c7',
                         textAlign: 'center',
                         color: parseFloat(dia.coberturaTotal) > 50 ? '#e74c3c' : '#27ae60',
                         fontWeight: '500'
                       }}>{dia.coberturaTotal}%</td>
-                      <td style={{ 
-                        padding: '10px 15px', 
-                        border: '1px solid #bdc3c7', 
+                      <td style={{
+                        padding: '10px 15px',
+                        border: '1px solid #bdc3c7',
                         textAlign: 'center',
                         fontSize: '16px',
                         fontWeight: 'bold'
@@ -425,12 +426,12 @@ export default function NuvensPage({ bairros }) {
                 </tbody>
               </table>
             </div>
-            
+
             {/* === Resumo da tabela === */}
-            <div style={{ 
-              marginTop: '15px', 
-              padding: '10px', 
-              backgroundColor: '#f8f9fa', 
+            <div style={{
+              marginTop: '15px',
+              padding: '10px',
+              backgroundColor: '#f8f9fa',
               borderRadius: '5px',
               display: 'flex',
               justifyContent: 'space-around',
