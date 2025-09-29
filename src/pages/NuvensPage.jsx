@@ -18,7 +18,13 @@ import Header from "../components/Header";
 import Aside from "../components/Aside";
 import "../styles/NuvensPage.css";
 
-import { fetchDataDia, fetchDadosSemana, cores } from "../utils/nuvensUtil";
+import {
+  fetchDataDia,
+  fetchDadosSemana,
+  cores,
+  calcularHorasSolDia,
+  calcularCoberturaTotal,
+} from "../utils/nuvensUtil";
 
 ChartJS.register(
   Title,
@@ -36,7 +42,7 @@ export default function NuvensPage({ bairros }) {
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
-  const [dataExecucao, setDataExecucao] = useState("2025-09-22");
+  const [dataExecucao, setDataExecucao] = useState("2025-09-29");
   const [dados, setDados] = useState(null);
   const [dadosSemana, setDadosSemana] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -89,20 +95,22 @@ export default function NuvensPage({ bairros }) {
     if (latitude && longitude) fetchData();
   }, [fetchData, latitude, longitude]);
 
-  // --- Preparar dados para gráficos ---
+ // --- Preparar dados para gráficos ---
   const horas = dados?.[0]?.dados.map((d) => d.horas) || [];
   const coberturaAlta = dados?.find((d) => d.nome === "hcdchcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
   const coberturaMedia = dados?.find((d) => d.nome === "mcdcmcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
   const coberturaBaixa = dados?.find((d) => d.nome === "lcdclcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
-  const horasSol = dados?.find((d) => d.nome === "sunsdsfc")?.dados.map((d) => +(d.valor / 3600).toFixed(2)) || [];
-  const taxaEvaporacao = dados?.find((d) => d.nome === "pevprsfc")?.dados.map((d) => +d.valor.toFixed(2)) || [];
+  const coberturaTotal = calcularCoberturaTotal(dados || []);
+  const horasSol = dados?.find(d => d.nome === "sunsdsfc")?.dados.map(d => +(d.valor / 3600).toFixed(2)) || [];
+  const horasSolDia = calcularHorasSolDia(dados || []);
+  const taxaEvaporacao = dados?.find(d => d.nome === "pevprsfc")?.dados.map(d => +d.valor.toFixed(2)) || [];
 
-  const coberturaTotal = coberturaAlta.map((a, i) => +(a + coberturaMedia[i] + coberturaBaixa[i]).toFixed(2));
-  const totalHorasSol = +horasSol.reduce((acc, h) => acc + h, 0).toFixed(2);
+  const totalHorasSol = +horasSolDia.toFixed(2);
+  const mediaCobertura = coberturaTotal.length
+    ? +(coberturaTotal.reduce((acc, c) => acc + c, 0) / coberturaTotal.length).toFixed(2)
+    : 0;
   const totalEvaporacao = +taxaEvaporacao.reduce((acc, e) => acc + e, 0).toFixed(2);
-  const mediaCobertura = +(coberturaTotal.reduce((acc, c) => acc + c, 0) / coberturaTotal.length || 0).toFixed(2);
   const isDiaEnsolarado = totalHorasSol >= 6;
-
 
   // --- Opções de gráficos ---
 const opcoesCompactas = {

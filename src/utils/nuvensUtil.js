@@ -6,6 +6,7 @@ const cores = {
   evap: "#A5D01B",
 };
 
+// Formatar data para DD/MM
 export const formatarData = (data) => {
   const options = { day: "2-digit", month: "2-digit" };
   return new Date(data).toLocaleDateString("pt-BR", options);
@@ -17,15 +18,26 @@ export const somarValores = (dadosDia, nomeVariavel) => {
   return variavel.reduce((acc, h) => acc + (h.valor || 0), 0);
 };
 
+// Calcular total de horas de sol do dia
+export const calcularHorasSolDia = (dadosDia) => {
+  const horasSol = dadosDia.find(d => d.nome === "sunsdsfc")?.dados.map(d => d.valor / 3600) || [];
+  return horasSol.reduce((acc, h) => acc + h, 0);
+};
 
-// Buscar dados de uma variável para um dia específico
+// Calcular cobertura total do dia (limitada a 100%)
+export const calcularCoberturaTotal = (dadosDia) => {
+  const alta = dadosDia.find(d => d.nome === "hcdchcll")?.dados.map(d => d.valor) || [];
+  const media = dadosDia.find(d => d.nome === "mcdcmcll")?.dados.map(d => d.valor) || [];
+  const baixa = dadosDia.find(d => d.nome === "lcdclcll")?.dados.map(d => d.valor) || [];
+  return alta.map((a, i) => Math.min(a + (media[i] || 0) + (baixa[i] || 0), 100));
+};
+
+// Buscar dados de um dia
 export const fetchDataDia = async (
-  data,
-  latitude,
-  longitude,
-  token,
-  variaveisDisponiveis
+  data, latitude, longitude, token, variaveisDisponiveis
 ) => {
+  if (!Array.isArray(variaveisDisponiveis)) variaveisDisponiveis = [];
+  
   const resultados = await Promise.all(
     variaveisDisponiveis.map(async (v) => {
       const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${v.nome}/${data}/${longitude}/${latitude}`;
@@ -40,17 +52,13 @@ export const fetchDataDia = async (
       }
     })
   );
+
   return resultados;
 };
 
-// Buscar dados da semana e calcular métricas
+// Buscar dados da semana
 export const fetchDadosSemana = async (
-  dataExecucao,
-  fetchDataDiaFn,
-  latitude,
-  longitude,
-  token,
-  variaveisDisponiveis
+  dataExecucao, fetchDataDiaFn, latitude, longitude, token, variaveisDisponiveis
 ) => {
   const semana = [];
 
@@ -60,32 +68,23 @@ export const fetchDadosSemana = async (
     const dataString = data.toISOString().slice(0, 10);
 
     try {
-      const dadosDia = await fetchDataDiaFn(
-        dataString,
-        latitude,
-        longitude,
-        token,
-        variaveisDisponiveis
-      );
+      const dadosDia = await fetchDataDiaFn(dataString, latitude, longitude, token, variaveisDisponiveis);
 
-      const horasSol = somarValores(dadosDia, "sunsdsfc") / 3600;
-      const coberturaAlta =
-        somarValores(dadosDia, "hcdchcll") /
-        (dadosDia.find((d) => d.nome === "hcdchcll")?.dados.length || 1);
-      const coberturaMedia =
-        somarValores(dadosDia, "mcdcmcll") /
-        (dadosDia.find((d) => d.nome === "mcdcmcll")?.dados.length || 1);
-      const coberturaBaixa =
-        somarValores(dadosDia, "lcdclcll") /
-        (dadosDia.find((d) => d.nome === "lcdclcll")?.dados.length || 1);
-      const coberturaTotal = coberturaAlta + coberturaMedia + coberturaBaixa;
+      const horasSol = calcularHorasSolDia(dadosDia);
+      const horasSolDia = Math.min(horasSol, 24);
+      const coberturaTotal = calcularCoberturaTotal(dadosDia);
+      const mediaCobertura = coberturaTotal.length
+        ? coberturaTotal.reduce((acc, c) => acc + c, 0) / coberturaTotal.length
+        : 0;
 
       semana.push({
         data: formatarData(data),
+        //horasSol: Number(horasSolDia.toFixed(2)), formato 24 horas
         horasSol: Number(horasSol.toFixed(2)),
-        coberturaTotal: Number(coberturaTotal.toFixed(2)),
+        coberturaTotal: Number(mediaCobertura.toFixed(2)),
         classificacao: horasSol >= 6 ? "Sol" : "Nublado",
       });
+
     } catch (err) {
       console.error(`Erro semana:`, err);
       semana.push({
