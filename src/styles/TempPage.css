@@ -225,7 +225,7 @@ button {
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 990px) {
     .cards-container {
         grid-template-columns: 1fr;
         /* Uma coluna em telas menores (tablet) */
