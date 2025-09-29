@@ -1,4 +1,4 @@
-/* Layout principal */
+/* --- Layout principal --- */
 .layout-emater {
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
   flex: 1;
 }
 
-/* Conteúdo principal */
+/* --- Conteúdo principal --- */
 .conteudo-principal {
   flex: 1;
   display: flex;
@@ -20,7 +20,7 @@
   padding: 20px;
 }
 
-/* Títulos */
+/* --- Títulos --- */
 h1 {
   text-align: center;
   margin-bottom: 0px;
@@ -34,7 +34,7 @@ h2 {
   color: var(--green-medium, #A5D01B);
 }
 
-/* Campo de data */
+/* --- Campo de data --- */
 .input-data {
   background-color: var(--green-offwhite, #f4f8f2);
   border: 1px solid var(--green-medium, #A5D01B);
@@ -44,7 +44,7 @@ h2 {
   margin-left: 10px;
 }
 
-/* Mensagens */
+/* --- Mensagens --- */
 .loading {
   font-weight: bold;
 }
@@ -53,42 +53,44 @@ h2 {
   color: red;
 }
 
-/* Cards Resumo */
+/* --- Cards Resumo --- */
 .cards-resumo {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
-  margin-bottom: 30px;
-  margin-top: 10px;
+  margin: 10px 0 30px 0;
 }
 
 .cards-resumo .card {
   background-color: var(--gray, #202c0f);
   color: var(--green-offwhite, #f4f8f2);
-  padding: 8px;
+  padding: 10px;
   border-radius: 10px;
   text-align: center;
   gap: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 .cards-resumo .card h4 {
-    margin-bottom: 5px; /* espaço abaixo do título */
+  margin-bottom: 5px;
 }
 
 .cards-resumo .card p {
-    margin: 5px 0; /* espaço acima e abaixo do valor */
+  margin: 5px 0;
 }
 
 .cards-resumo .card small {
-    margin-top: 2px; /* espaço acima do small */
+  margin-top: 2px;
 }
 
-.card{
-    margin-bottom: 10px;
+.card {
+  margin-bottom: 10px;
 }
 
-/* Gráficos (vertical) */
+/* --- Gráficos Verticais --- */
 .graficos-verticais {
   display: flex;
   flex-direction: column;
@@ -104,16 +106,20 @@ h2 {
 
 .graficos-verticais .grafico-container {
   height: 300px;
+  max-height: 400px;
+  min-height: 250px;
   width: 100%;
 }
 
-/* Container gráfico */
+/* --- Container gráfico genérico --- */
 .grafico-container {
   height: 250px;
+  max-height: 400px;
+  min-height: 200px;
   width: 100%;
 }
 
-/* Tabela detalhada da semana */
+/* --- Tabela detalhada da semana --- */
 .tabela-semana {
   width: 100%;
   border-collapse: collapse;
@@ -123,6 +129,7 @@ h2 {
 .tabela-semana th, .tabela-semana td {
   padding: 12px 15px;
   border: 1px solid #bdc3c7;
+  text-align: center;
 }
 
 .tabela-semana th {
@@ -144,31 +151,17 @@ h2 {
   transition: background-color 0.2s ease;
 }
 
-.tabela-semana td {
-  text-align: center;
-}
-
-.tabela-semana .sol {
+.tabela-semana .sol, .tabela-semana .nublado {
   color: #042a13;
   font-weight: bold;
 }
 
-.tabela-semana .nublado {
-  color: #042a13;
-  font-weight: bold;
-}
-
-.tabela-semana .cobertura-alta {
+.tabela-semana .cobertura-alta, .tabela-semana .cobertura-baixa {
   color: #042a13;
   font-weight: 500;
 }
 
-.tabela-semana .cobertura-baixa {
-  color: #042a13;
-  font-weight: 500;
-}
-
-/* Legibilidade de gráficos */
+/* --- Legibilidade de gráficos --- */
 .chartjs-render-monitor {
   font-family: 'Inter', sans-serif;
 }
@@ -179,56 +172,42 @@ h2 {
 }
 
 .graph-container {
-    background-color: #f4f8f2; /* ou outra cor da paleta */
-    border-radius: 8px;
-    padding: 10px;
+  background-color: #f4f8f2;
+  border-radius: 8px;
+  padding: 10px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .cards-resumo {
-    grid-template-columns: 1fr;
+/* --- Responsividade --- */
+@media (max-width: 1650px) {
+  .grafico-container {
+    height: 250px;
   }
 
-  .graficos-verticais .grafico-container {
+  .tabela-semana {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cards-resumo {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grafico-container {
     height: 220px;
   }
 
   .tabela-semana {
-    font-size: 0.85rem;
+    max-width: 100%;
   }
-}
 
-/* Botões (caso existam) */
-button {
-  font-family: 'Inter';
-  font-weight: 700;
-  background-color: var(--green-medium, #A5D01B);
-  color: var(--green-offwhite, #f4f8f2);
-  border: none;
-  border-radius: 5px;
-  padding: 12px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--green-strong, #1B8211);
-  color: var(--green-text, #3c4a2e);
-}
-
-/* --- Responsividade --- */
-@media (max-width: 1200px) {
-  .cards-resumo {
-    grid-template-columns: 1fr;
-  }
-  
-  .grafico-container {
-    height: 220px;
-  }
-  
-  .card table {
-    font-size: 0.9rem;
+  .card {
+    width: 90%;
+    max-width: 350px;
   }
 }
 
@@ -236,8 +215,8 @@ button:hover {
   .cards-resumo {
     grid-template-columns: 1fr;
   }
-  
-  .graficos-verticais .grafico-container {
+
+  .grafico-container {
     height: 200px;
   }
 }
