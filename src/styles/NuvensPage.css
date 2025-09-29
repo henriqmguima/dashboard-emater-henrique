@@ -1,0 +1,243 @@
+/* Layout principal */
+.layout-emater {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-inferior {
+  display: flex;
+  flex: 1;
+}
+
+/* Conteúdo principal */
+.conteudo-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--green-dark, #1a240c);
+  color: var(--green-offwhite, #f4f8f2);
+  padding: 20px;
+}
+
+/* Títulos */
+h1 {
+  text-align: center;
+  margin-bottom: 0px;
+  color: var(--green-light, #ecfde4);
+}
+
+h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: var(--green-medium, #A5D01B);
+}
+
+/* Campo de data */
+.input-data {
+  background-color: var(--green-offwhite, #f4f8f2);
+  border: 1px solid var(--green-medium, #A5D01B);
+  border-radius: 5px;
+  padding: 5px;
+  color: var(--green-text, #3c4a2e);
+  margin-left: 10px;
+}
+
+/* Mensagens */
+.loading {
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+}
+
+/* Cards Resumo */
+.cards-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
+.cards-resumo .card {
+  background-color: var(--gray, #202c0f);
+  color: var(--green-offwhite, #f4f8f2);
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.cards-resumo .card h4 {
+    margin-bottom: 5px; /* espaço abaixo do título */
+}
+
+.cards-resumo .card p {
+    margin: 5px 0; /* espaço acima e abaixo do valor */
+}
+
+.cards-resumo .card small {
+    margin-top: 2px; /* espaço acima do small */
+}
+
+.card{
+    margin-bottom: 10px;
+}
+
+/* Gráficos (vertical) */
+.graficos-verticais {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.graficos-verticais .card {
+  color: var(--green-text, #3c4a2e);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.graficos-verticais .grafico-container {
+  height: 300px;
+  width: 100%;
+}
+
+/* Container gráfico */
+.grafico-container {
+  height: 250px;
+  width: 100%;
+}
+
+/* Tabela detalhada da semana */
+.tabela-semana {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tabela-semana th, .tabela-semana td {
+  padding: 12px 15px;
+  border: 1px solid #bdc3c7;
+}
+
+.tabela-semana th {
+  background-color: var(--green-strong, #1B8211);
+  color: var(--green-light, #122f05);
+  font-weight: 500;
+}
+
+.tabela-semana tr:nth-child(even) {
+  background-color: #89b87b;
+}
+
+.tabela-semana tr:nth-child(odd) {
+  background-color: #6e9464;
+}
+
+.tabela-semana tr:hover {
+  background-color: #a7dcbd;
+  transition: background-color 0.2s ease;
+}
+
+.tabela-semana td {
+  text-align: center;
+}
+
+.tabela-semana .sol {
+  color: #042a13;
+  font-weight: bold;
+}
+
+.tabela-semana .nublado {
+  color: #042a13;
+  font-weight: bold;
+}
+
+.tabela-semana .cobertura-alta {
+  color: #042a13;
+  font-weight: 500;
+}
+
+.tabela-semana .cobertura-baixa {
+  color: #042a13;
+  font-weight: 500;
+}
+
+/* Legibilidade de gráficos */
+.chartjs-render-monitor {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Labels e legenda */
+.chartjs-label, .chartjs-legend {
+  font-size: 14px !important;
+}
+
+.graph-container {
+    background-color: #f4f8f2; /* ou outra cor da paleta */
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cards-resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .graficos-verticais .grafico-container {
+    height: 220px;
+  }
+
+  .tabela-semana {
+    font-size: 0.85rem;
+  }
+}
+
+/* Botões (caso existam) */
+button {
+  font-family: 'Inter';
+  font-weight: 700;
+  background-color: var(--green-medium, #A5D01B);
+  color: var(--green-offwhite, #f4f8f2);
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--green-strong, #1B8211);
+  color: var(--green-text, #3c4a2e);
+}
+
+/* --- Responsividade --- */
+@media (max-width: 1200px) {
+  .cards-resumo {
+    grid-template-columns: 1fr;
+  }
+  
+  .grafico-container {
+    height: 220px;
+  }
+  
+  .card table {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-resumo {
+    grid-template-columns: 1fr;
+  }
+  
+  .graficos-verticais .grafico-container {
+    height: 200px;
+  }
+}
