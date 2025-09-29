@@ -36,7 +36,7 @@ export default function Header() {
     return (
         <header className="header-emater">
             <div className="header-left">
-                <h1>
+                <h1 onClick={() => window.location.href = "/"} className="header-title" title="Voltar para a página inicial">
                     PROJETO <span>EMATER</span>
                 </h1>
                 <span className="icone-planta">{icone}</span>

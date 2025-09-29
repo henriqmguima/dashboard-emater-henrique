@@ -11,11 +11,15 @@ import {
   LineElement,
   BarElement,
 } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Aside from "../components/Aside";
-import "../styles/ClimApi.css";
+import "../styles/TempPage.css";
 import "../styles/Layout.css";
+import "../Index.css";
+ChartJS.register(ChartDataLabels);
 
 ChartJS.register(
   Title,
@@ -28,11 +32,11 @@ ChartJS.register(
   BarElement
 );
 
-export default function ClimApi({ bairros }) {
+export default function TempPage({ bairros }) {
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
-  const [dataExecucao, setDataExecucao] = useState("2025-09-22");
+  const [dataExecucao, setDataExecucao] = useState("2025-09-25");
   const [latitude] = useState(bairro.lat);
   const [longitude] = useState(bairro.lng);
 
@@ -41,7 +45,7 @@ export default function ClimApi({ bairros }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "633e59b0-7eb5-3cfe-8ade-d8544f8fa24e";
+  const token = "b8a4d3d4-a41c-37a7-96b4-667f96d443b5";
 
   const fetchVariavel = async (variavel, data) => {
     const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
@@ -135,10 +139,10 @@ export default function ClimApi({ bairros }) {
       <div className="layout-inferior">
         <Aside />
         <div className="conteudo-principal" style={{ padding: "20px" }}>
-          <h1>ClimAPI</h1>
+          <h1>Temperatura e Condição do Ar</h1>
           <h2>{nomeBairro}</h2>
 
-          <label>
+          {/* <label>
             Data de execução:{" "}
             <input
               className="input-data"
@@ -146,7 +150,7 @@ export default function ClimApi({ bairros }) {
               value={dataExecucao}
               onChange={(e) => setDataExecucao(e.target.value)}
             />
-          </label>
+          </label> */}
 
           {loading && <p>Carregando...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
@@ -156,25 +160,36 @@ export default function ClimApi({ bairros }) {
             {dadosHoje && (
               <div className="card">
                 <h3>Temperatura Atual</h3>
-                <p>Atual: {dadosHoje.atual}°C</p>
-                <p>Ponto de Orvalho: {dadosHoje.orvalho}°C</p>
+                <div className="buttons-container">
+                  <button>Atual: {dadosHoje.atual}°C</button>
+                  <button>Ponto de Orvalho: {dadosHoje.orvalho}°C</button>
+                </div>
               </div>
             )}
-
             {/* === Bloco 2: Variação Térmica === */}
             {dadosHoje && (
               <div className="card">
                 <h3>Variação Térmica</h3>
-                <p>Máx: {dadosHoje.max}°C</p>
-                <p>Mín: {dadosHoje.min}°C</p>
-                <p>Amplitude: {dadosHoje.amplitude}°C</p>
+                <button>Máx: {dadosHoje.max}°C</button>
+                <button>Mín: {dadosHoje.min}°C</button>
+                <button>Amplitude: {dadosHoje.amplitude}°C</button>
               </div>
             )}
 
             {/* === Bloco 3: Variação Semanal === */}
+
             {dadosSemana.length > 0 && (
               <div className="card">
                 <h3>Variação Semanal</h3>
+                <button className="highlight-button">
+                  Maior Variação:{" "}
+                  {/* Exibe a maior variação com duas casas decimais */}
+                  {Math.max(...dadosSemana.map((d) => d.variacao)).toFixed(2)}°C em{" "}
+                  {dadosSemana.find(
+                    (d) => d.variacao === Math.max(...dadosSemana.map((x) => x.variacao))
+                  ).data}
+                </button>
+
                 <table>
                   <thead>
                     <tr>
@@ -196,39 +211,64 @@ export default function ClimApi({ bairros }) {
                     ))}
                   </tbody>
                 </table>
-                <p>
-                  Maior Variação:{" "}
-                  {/* Exibe a maior variação com duas casas decimais */}
-                  {Math.max(...dadosSemana.map((d) => d.variacao)).toFixed(2)}°C em{" "}
-                  {dadosSemana.find(
-                    (d) => d.variacao === Math.max(...dadosSemana.map((x) => x.variacao))
-                  ).data}
-                </p>
               </div>
             )}
 
+
             {/* === Bloco 4: Probabilidade de Orvalho === */}
             {dadosSemana.length > 0 && (
-              <div className="card">
+              <div className="card" id="chart-card">
                 <h3>Probabilidade de Orvalho</h3>
-                <Bar
-                  data={{
-                    labels: dadosSemana.map((d) => d.data),
-                    datasets: [
-                      {
-                        label: "Probabilidade de Orvalho (%)",
-                        data: dadosSemana.map((d) => d.probOrvalho),
-                        backgroundColor: "#69d01b",
+                <div className="chart-container">
+                  <Bar
+                    data={{
+                      labels: dadosSemana.map((d) => d.data),
+                      datasets: [
+                        {
+                          label: "Probabilidade de Orvalho (%)",
+                          data: dadosSemana.map((d) => d.probOrvalho),
+                          backgroundColor: "#19c388",
+                          borderRadius: 5,
+                          barPercentage: 0.8,
+                          hoverBackgroundColor: "#17a374",
+                          borderWidth: 1,
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: { display: false },
+                        datalabels: {
+                          color: "#fff", // cor padrão do texto
+                          anchor: "end",
+                          align: "end", // 👈 "end" = acima da barra | "start" = dentro da barra
+                          clip: false, // permite que apareça mesmo fora do canvas
+                          font: { size: 12, weight: "bold" },
+                          formatter: (value) => `${value.toFixed(1)}%`, // arredonda para 1 casa
+                        },
                       },
-                    ],
-                  }}
-                  options={{
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                  }}
-                />
+                      scales: {
+                        x: {
+                          ticks: { color: "#fff", font: { size: 12 } },
+                          grid: { display: false, drawBorder: false },
+                        },
+                        y: {
+                          beginAtZero: true,
+                          suggestedMax: 110, // dá espaço para mostrar até 100% sem cortar
+                          ticks: { color: "#A5D01B", font: { size: 12 } },
+                          border: { color: "#A5D01B" },
+                          grid: { display: false, drawBorder: false },
+                        },
+                      },
+                    }}
+                  />
+                </div>
               </div>
             )}
+
+
           </div>
         </div>
       </div>
