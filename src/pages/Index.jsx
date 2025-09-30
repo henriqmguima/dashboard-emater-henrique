@@ -125,7 +125,7 @@ const Index = ({ bairros }) => {
         {/* Footer */}
         <div className="footer">
           <p>Desenvolvido na disciplina de Extensão</p>
-          <img src="/ifsul.png" alt="IFSUL" />
+          <img src="/ifsul.png" alt="IFSUL" onClick={() => navigate(`api/inmet`)} />
         </div>
       </div>
     </div>
