@@ -45,7 +45,7 @@ export default function Agua({ bairros }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const token = "03786e93-3a28-3d4c-a7be-5ed5bdacd6f5";
+    const token = "2a428260-f19f-32fa-8152-753f2586501d";
 
     const fetchVariavel = async (variavel, data) => {
         const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
