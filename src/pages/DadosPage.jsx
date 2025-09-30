@@ -18,7 +18,7 @@ import Header from "../components/Header";
 import Aside from "../components/Aside";
 import "../styles/TempPage.css";
 import "../styles/Layout.css";
-import "../Index.css";
+import "../styles/Index.css";
 ChartJS.register(ChartDataLabels);
 
 ChartJS.register(
