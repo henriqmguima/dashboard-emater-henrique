@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import TempPage from "./pages/TempPage";
 import NuvensPage from "./pages/NuvensPage";
+import AguaPage from "./pages/AguaPage";
+import DadosPage from "./pages/DadosPage";
+
 import InmetApiTest from "./pages/InmetApiTest";
 
 const bairros = [
@@ -29,9 +32,8 @@ function App() {
           element={<NuvensPage bairros={bairros} />}
         />
 
-        {/* Futuras rotas comentadas */}
-        {/* <Route path="/clima/:nomeBairro/agua" element={<AguaPage bairros={bairros} />} /> */}
-        {/* <Route path="/clima/:nomeBairro/dados" element={<DadosPage bairros={bairros} />} /> */}
+        {<Route path="/clima/:nomeBairro/agua" element={<AguaPage bairros={bairros} />} />}
+        {<Route path="/clima/:nomeBairro/dados" element={<DadosPage bairros={bairros} />} />}
         <Route path="/api/inmet" element={<InmetApiTest />} />
       </Routes>
     </Router>
