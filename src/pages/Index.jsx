@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-import "../styles/index.css";
+import "../styles/Index.css";
 import { MapPinPlus, ThermometerHot, Drop, CloudSun, ChartBar } from "@phosphor-icons/react";
 
 // Configuração do ícone padrão do Leaflet
