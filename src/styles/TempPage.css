@@ -37,6 +37,10 @@
     background-color: var(--green-dark);
     color: var(--green-offwhite);
     padding: 20px;
+    margin-left: 90px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+
 }
 
 /* --- Títulos --- */
@@ -44,13 +48,14 @@ h1 {
     text-align: center;
     margin-bottom: 0px;
     color: var(--green-light);
+    font-size: 2.5rem;
 }
 
 h2 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 30px;
-    color: var(--green-medium);
+    font-size: 2rem;
 }
 
 /* --- Campo de Data --- */
@@ -86,13 +91,13 @@ h2 {
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
 }
 
 .card h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin: 2px 0 10px 0;
-    color: var(--green-medium);
+    color: #e7eed1;
 }
 
 /* --- Tabela --- */
@@ -181,13 +186,82 @@ button {
 }
 
 .buttons-container button:hover {
-    background-color: var(--green-medium);
-    color: var(--green-text);
+    opacity: calc(0.8);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 
 }
+
+
+.btn-max {
+    background-color: #0e7450;
+}
+
+.btn-min {
+    background-color: #19C388;
+    color: #123c1a;
+}
+
+.buttons-container2 {
+    display: flex;
+    flex-direction: column;
+    /* primeiro linha com dois, depois o botão único */
+    gap: 8px;
+    /* espaçamento entre as linhas */
+    width: 96%;
+}
+
+.dados {
+    display: block;
+    /* força o strong ocupar linha inteira */
+    font-size: 2.6em;
+    /* opcional: aumenta o tamanho do número */
+    /* espaço entre número e texto do botão */
+    text-align: center;
+    /* centraliza o valor */
+}
+
+.buttons-container2 button {
+    height: 80px;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    /* garante que texto fique abaixo do strong */
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+
+}
+
+
+
+.buttons-container2 button:hover {
+    opacity: calc(0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.6s ease;
+
+}
+
+.btns {
+    display: flex;
+    gap: 8px;
+    /* espaçamento entre os dois primeiros botões */
+}
+
+.btns button {
+    flex: 1;
+    /* divide igualmente o espaço entre Máx e Mín */
+}
+
+.btn-am {
+    /* ocupa toda a linha */
+    background-color: #A5D01B;
+    color: #17301c;
+
+}
+
 
 .highlight-button {
     background-color: #42921d;
@@ -198,7 +272,7 @@ button {
 
 .highlight-button:hover {
     background-color: #51a52d;
-    color: var(--green-offwhite);
+    opacity: calc(0.9);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
@@ -258,15 +332,53 @@ button {
         /* Uma coluna em telas menores (celular) */
     }
 
+    .conteudo-principal {
+        padding: 0px;
+        display: contents;
+        display: flex;
+        margin-left: 0px;
+
+    }
+
     .conteudo-principal h1 {
         font-size: 1.5rem;
+
     }
 
     .conteudo-principal h2 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+        margin: 0;
     }
 
+    .card {
+        width: 70vw;
+        /* largura adaptável */
+        padding: 15px;
+    }
 
+    .card h3 {
+        font-size: 1.2rem;
+        margin: 2px 0 10px 0;
+    }
+
+    #chart-card {
+        margin-bottom: 60px;
+    }
+
+    .buttons-container2 {
+        width: 80%;
+        padding: 0 10px;
+    }
+
+    .buttons-container2 button {
+        height: 60px;
+        font-size: 0.7rem;
+    }
+
+    .dados {
+        font-size: 2.0em;
+
+    }
 }
 
 @media (max-width: 480px) {
@@ -276,5 +388,13 @@ button {
 
     .conteudo-principal h2 {
         font-size: 1rem;
+    }
+
+    .conteudo-principal h3 {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 0.7rem !important;
     }
 }

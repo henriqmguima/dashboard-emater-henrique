@@ -50,7 +50,7 @@ export default function NuvensPage({ bairros }) {
 
   const latitude = bairro?.lat;
   const longitude = bairro?.lng;
-  const token = "356893be-dd98-328b-b9c4-e55067af506f";
+  const token = "03786e93-3a28-3d4c-a7be-5ed5bdacd6f5";
 
   const variaveisDisponiveis = [
     { nome: "hcdchcll", descricao: "Nuvens Altas (%)" },
@@ -207,7 +207,7 @@ export default function NuvensPage({ bairros }) {
           <h1>ClimAPI - Nuvens e Sol</h1>
           <h2>{nomeBairro}</h2>
 
-          <label>
+          {/* <label>
             Data de execução:{" "}
             <input
               className="input-data"
@@ -215,7 +215,7 @@ export default function NuvensPage({ bairros }) {
               value={dataExecucao}
               onChange={(e) => setDataExecucao(e.target.value)}
             />
-          </label>
+          </label> */}
 
           {loading && <p className="loading">Carregando...</p>}
           {error && <p className="error">{error}</p>}

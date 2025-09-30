@@ -45,7 +45,7 @@ export default function TempPage({ bairros }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "356893be-dd98-328b-b9c4-e55067af506f";
+  const token = "2a428260-f19f-32fa-8152-753f2586501d";
 
   const fetchVariavel = async (variavel, data) => {
     const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
@@ -138,7 +138,7 @@ export default function TempPage({ bairros }) {
       <Header />
       <div className="layout-inferior">
         <Aside />
-        <div className="conteudo-principal" style={{ padding: "20px" }}>
+        <div className="conteudo-principal" >
           <h1>Temperatura e Condição do Ar</h1>
           <h2>{nomeBairro}</h2>
 
@@ -160,21 +160,42 @@ export default function TempPage({ bairros }) {
             {dadosHoje && (
               <div className="card">
                 <h3>Temperatura Atual</h3>
-                <div className="buttons-container">
-                  <button>Atual: {dadosHoje.atual}°C</button>
-                  <button>Ponto de Orvalho: {dadosHoje.orvalho}°C</button>
+                <div className="buttons-container2">
+                  <div className="buttons-container">
+                    <button>
+                      <strong className="dados">{dadosHoje.atual}°C</strong>
+                      Atual
+                    </button>
+                    <button>
+                      <strong className="dados">{dadosHoje.orvalho}°C</strong>
+                      Ponto de Orvalho
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
-            {/* === Bloco 2: Variação Térmica === */}
             {dadosHoje && (
               <div className="card">
                 <h3>Variação Térmica</h3>
-                <button>Máx: {dadosHoje.max}°C</button>
-                <button>Mín: {dadosHoje.min}°C</button>
-                <button>Amplitude: {dadosHoje.amplitude}°C</button>
+                <div className="buttons-container2">
+                  <div className="btns">
+                    <button className="btn-max">
+                      <strong className="dados">{dadosHoje.max}°C</strong>
+                      Máxima
+                    </button>
+                    <button className="btn-min">
+                      <strong className="dados">{dadosHoje.min}°C</strong>
+                      Mínima
+                    </button>
+                  </div>
+                  <button className="btn-am">
+                    <h className="dados">{dadosHoje.amplitude}°C</h>
+                    Amplitude
+                  </button>
+                </div>
               </div>
             )}
+
 
             {/* === Bloco 3: Variação Semanal === */}
 
