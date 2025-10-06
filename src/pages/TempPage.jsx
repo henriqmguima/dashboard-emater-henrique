@@ -36,7 +36,7 @@ export default function TempPage({ bairros }) {
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
-  const [dataExecucao, setDataExecucao] = useState("2025-09-25");
+  const [dataExecucao, setDataExecucao] = useState("2025-10-05");
   const [latitude] = useState(bairro.lat);
   const [longitude] = useState(bairro.lng);
 
@@ -189,7 +189,7 @@ export default function TempPage({ bairros }) {
                     </button>
                   </div>
                   <button className="btn-am">
-                    <h className="dados">{dadosHoje.amplitude}°C</h>
+                    <strong className="dados">{dadosHoje.amplitude}°C</strong>
                     Amplitude
                   </button>
                 </div>
@@ -227,7 +227,7 @@ export default function TempPage({ bairros }) {
                         <td>{d.max}°C</td>
                         <td>{d.min}°C</td>
                         {/* Exibe a variação com duas casas decimais */}
-                        <td>{d.variacao.toFixed(2)}°C</td>
+                        <td>{d.variacao}°C</td>
                       </tr>
                     ))}
                   </tbody>

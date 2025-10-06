@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
     Title,
@@ -9,7 +9,6 @@ import {
     LinearScale,
     PointElement,
     LineElement,
-    BarElement,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -19,7 +18,6 @@ import Aside from "../components/Aside";
 import "../styles/TempPage.css";
 import "../styles/Layout.css";
 import "../styles/Index.css";
-ChartJS.register(ChartDataLabels);
 
 ChartJS.register(
     Title,
@@ -29,19 +27,23 @@ ChartJS.register(
     LinearScale,
     PointElement,
     LineElement,
-    BarElement
+    ChartDataLabels
 );
 
 export default function Agua({ bairros }) {
     const { nomeBairro } = useParams();
     const bairro = bairros.find((b) => b.nome === nomeBairro);
 
-    const [dataExecucao, setDataExecucao] = useState("2025-09-25");
-    const [latitude] = useState(bairro.lat);
-    const [longitude] = useState(bairro.lng);
+    // Validação de bairro
+    if (!bairro) return <p>Bairro não encontrado.</p>;
 
-    const [dadosHoje, setDadosHoje] = useState(null);
-    const [dadosSemana, setDadosSemana] = useState([]);
+    const latitude = parseFloat(bairro.lat);
+    const longitude = parseFloat(bairro.lng);
+
+    const [dataExecucao] = useState(new Date().toISOString().split("T")[0]);
+    const [umidadeSemana, setUmidadeSemana] = useState([]);
+    const [chuvaSemana, setChuvaSemana] = useState([]);
+    const [labelsSemana, setLabelsSemana] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -52,41 +54,108 @@ export default function Agua({ bairros }) {
         const response = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` },
         });
-        if (!response.ok) throw new Error(`Erro ${variavel}: ${response.status}`);
-        return response.json();
+        if (!response.ok) throw new Error(`Erro ao buscar ${variavel} (${response.status})`);
+        const json = await response.json();
+        if (!json || !Array.isArray(json) || json.length === 0) throw new Error(`Dados de ${variavel} não encontrados`);
+        return json[0]; // Pegando o primeiro valor (ajustável se quiser todas as horas)
     };
 
+    const fetchDadosSemana = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
 
-    // Função auxiliar para formatar a data para DD/MM/YY
-    const formatarData = (data) => {
-        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
-        return new Date(data).toLocaleDateString('pt-BR', options);
-    };
+            const umidade = [];
+            const chuva = [];
+            const labels = [];
 
+            for (let i = 6; i >= 0; i--) {
+                const data = new Date();
+                data.setDate(data.getDate() - i);
+                const dataStr = data.toISOString().split("T")[0];
 
-    // === Render ===
+                const [u, c] = await Promise.all([
+                    fetchVariavel("soil-moisture", dataStr),
+                    fetchVariavel("precipitation", dataStr),
+                ]);
+
+                umidade.push(u);
+                chuva.push(c);
+                labels.push(`${data.getDate()}/${data.getMonth() + 1}`);
+            }
+
+            setUmidadeSemana(umidade);
+            setChuvaSemana(chuva);
+            setLabelsSemana(labels);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }, [latitude, longitude]);
+
+    useEffect(() => {
+        fetchDadosSemana();
+    }, [fetchDadosSemana]);
+
     return (
         <div className="layout-emater">
             <Header />
             <div className="layout-inferior">
                 <Aside />
                 <div className="conteudo-principal" style={{ padding: "20px" }}>
-                    <h1>Umidade do Sol</h1>
+                    <h1>Umidade do Solo e Chuva</h1>
                     <h2>{nomeBairro}</h2>
-
-                    {/* <label>
-            Data de execução:{" "}
-            <input
-              className="input-data"
-              type="date"
-              value={dataExecucao}
-              onChange={(e) => setDataExecucao(e.target.value)}
-            />
-          </label> */}
 
                     {loading && <p>Carregando...</p>}
                     {error && <p style={{ color: "red" }}>{error}</p>}
 
+                    {!loading && !error && umidadeSemana.length > 0 && (
+                        <div style={{ marginTop: "30px" }}>
+                            <Line
+                                data={{
+                                    labels: labelsSemana,
+                                    datasets: [
+                                        {
+                                            label: "Umidade do Solo (%)",
+                                            data: umidadeSemana,
+                                            borderColor: "blue",
+                                            backgroundColor: "rgba(0,0,255,0.2)",
+                                            yAxisID: "y1",
+                                        },
+                                        {
+                                            label: "Chuva (mm)",
+                                            data: chuvaSemana,
+                                            borderColor: "green",
+                                            backgroundColor: "rgba(0,255,0,0.2)",
+                                            yAxisID: "y2",
+                                        },
+                                    ],
+                                }}
+                                options={{
+                                    responsive: true,
+                                    interaction: { mode: "index", intersect: false },
+                                    stacked: false,
+                                    plugins: { legend: { position: "top" } },
+                                    scales: {
+                                        y1: {
+                                            type: "linear",
+                                            display: true,
+                                            position: "left",
+                                            title: { display: true, text: "Umidade (%)" },
+                                        },
+                                        y2: {
+                                            type: "linear",
+                                            display: true,
+                                            position: "right",
+                                            title: { display: true, text: "Chuva (mm)" },
+                                            grid: { drawOnChartArea: false },
+                                        },
+                                    },
+                                }}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

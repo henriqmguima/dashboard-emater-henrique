@@ -61,15 +61,16 @@ export default function Header() {
                         nodeRef={nodeRef}
                     >
                         <ul className="dropdown-list" ref={nodeRef}>
-                            {locais.map((item, i) => (
+                            {locais.map((item) => (
                                 <li
-                                    key={i}
+                                    key={item}
                                     className="dropdown-item"
                                     onClick={() => handleSelect(item)}
                                 >
                                     {item}
                                 </li>
                             ))}
+
                         </ul>
                     </CSSTransition>
                 </div>
