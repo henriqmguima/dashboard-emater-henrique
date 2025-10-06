@@ -50,7 +50,7 @@ export default function NuvensPage({ bairros }) {
 
   const latitude = bairro?.lat;
   const longitude = bairro?.lng;
-  const token = "356893be-dd98-328b-b9c4-e55067af506f";
+  const token = "2a428260-f19f-32fa-8152-753f2586501d";
 
   const variaveisDisponiveis = [
     { nome: "hcdchcll", descricao: "Nuvens Altas (%)" },
@@ -95,7 +95,7 @@ export default function NuvensPage({ bairros }) {
     if (latitude && longitude) fetchData();
   }, [fetchData, latitude, longitude]);
 
- // --- Preparar dados para gráficos ---
+  // --- Preparar dados para gráficos ---
   const horas = dados?.[0]?.dados.map((d) => d.horas) || [];
   const coberturaAlta = dados?.find((d) => d.nome === "hcdchcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
   const coberturaMedia = dados?.find((d) => d.nome === "mcdcmcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
@@ -113,43 +113,43 @@ export default function NuvensPage({ bairros }) {
   const isDiaEnsolarado = totalHorasSol >= 6;
 
   // --- Opções de gráficos ---
-const opcoesCompactas = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { display: true, position: "bottom", labels: { boxWidth: 12 } },
-    tooltip: {
-      enabled: true,          // habilita tooltip
-      mode: 'nearest',        // pega o ponto mais próximo
-      intersect: false,       // não exige clicar exatamente no ponto
-      callbacks: {
-        label: function(context) {
-          // mostra o valor formatado apenas no hover
-          return `${context.dataset.label}: ${context.parsed.y}`;
+  const opcoesCompactas = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true, position: "bottom", labels: { boxWidth: 12 } },
+      tooltip: {
+        enabled: true,          // habilita tooltip
+        mode: 'nearest',        // pega o ponto mais próximo
+        intersect: false,       // não exige clicar exatamente no ponto
+        callbacks: {
+          label: function (context) {
+            // mostra o valor formatado apenas no hover
+            return `${context.dataset.label}: ${context.parsed.y}`;
+          }
         }
+      },
+      datalabels: {
+        display: false
       }
     },
-    datalabels: {
-      display: false
-    }
-  },
-  interaction: {
-    mode: 'nearest',
-    intersect: false
-  },
-  elements: {
-    point: {
-      radius: 3,        // tamanho do ponto
-      hoverRadius: 6    // tamanho do ponto ao passar o mouse
+    interaction: {
+      mode: 'nearest',
+      intersect: false
     },
-    line: {
-      borderWidth: 2
-    },
-    bar: {
-      borderWidth: 1
+    elements: {
+      point: {
+        radius: 3,        // tamanho do ponto
+        hoverRadius: 6    // tamanho do ponto ao passar o mouse
+      },
+      line: {
+        borderWidth: 2
+      },
+      bar: {
+        borderWidth: 1
+      }
     }
-  }
-};
+  };
 
 
   const graficoLinhasNuvens = {
@@ -207,7 +207,7 @@ const opcoesCompactas = {
           <h1>ClimAPI - Nuvens e Sol</h1>
           <h2>{nomeBairro}</h2>
 
-          <label>
+          {/* <label>
             Data de execução:{" "}
             <input
               className="input-data"
@@ -215,7 +215,7 @@ const opcoesCompactas = {
               value={dataExecucao}
               onChange={(e) => setDataExecucao(e.target.value)}
             />
-          </label>
+          </label> */}
 
           {loading && <p className="loading">Carregando...</p>}
           {error && <p className="error">{error}</p>}

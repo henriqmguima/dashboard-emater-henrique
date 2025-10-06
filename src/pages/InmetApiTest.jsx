@@ -10,6 +10,7 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
+import { color } from "chart.js/helpers";
 
 ChartJS.register(
   Title,
@@ -80,8 +81,8 @@ function InmetApiTest() {
   console.log(dadosGrafico);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Teste Inmet API</h1>
+    <div style={{ padding: "20px", backgroundColor: "#fff", color: "#000" }}>
+      <h1 style={{ color: "#000" }}>Teste Inmet API</h1>
       <h2>Estação de Charqueadas</h2>
 
       {/* Seleção de parâmetros */}
