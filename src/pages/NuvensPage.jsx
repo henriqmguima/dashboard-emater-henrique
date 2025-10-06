@@ -50,7 +50,7 @@ export default function NuvensPage({ bairros }) {
 
   const latitude = bairro?.lat;
   const longitude = bairro?.lng;
-  const token = "2a428260-f19f-32fa-8152-753f2586501d";
+  const token = "8bd352ea-5414-3729-aed5-b4867da78775";
 
   const variaveisDisponiveis = [
     { nome: "hcdchcll", descricao: "Nuvens Altas (%)" },
