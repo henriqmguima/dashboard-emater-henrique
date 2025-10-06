@@ -47,7 +47,7 @@ export default function Agua({ bairros }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const token = "2a428260-f19f-32fa-8152-753f2586501d";
+    const token = "8bd352ea-5414-3729-aed5-b4867da78775";
 
     const fetchVariavel = async (variavel, data) => {
         const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
@@ -75,8 +75,8 @@ export default function Agua({ bairros }) {
                 const dataStr = data.toISOString().split("T")[0];
 
                 const [u, c] = await Promise.all([
-                    fetchVariavel("soil-moisture", dataStr),
-                    fetchVariavel("precipitation", dataStr),
+                    fetchVariavel("soill0_10cm", dataStr),
+                    fetchVariavel("apcpsfc", dataStr),
                 ]);
 
                 umidade.push(u);
@@ -111,7 +111,7 @@ export default function Agua({ bairros }) {
                     {error && <p style={{ color: "red" }}>{error}</p>}
 
                     {!loading && !error && umidadeSemana.length > 0 && (
-                        <div style={{ marginTop: "30px" }}>
+                        <div style={{ marginTop: "30px", color: "#fff", backgroundColor: "#ddddddff", padding: "20px", borderRadius: "8px" }}>
                             <Line
                                 data={{
                                     labels: labelsSemana,
