@@ -21,22 +21,21 @@ export default function Aside() {
     return (
         <nav className="aside-emater">
             <nav>
-                {opcoes.map(({ icon, rota, descricao }, index) => {
-                    // codifica o nome do bairro igual ao que o browser faz na URL
+                {opcoes.map(({ icon, rota, descricao }) => {
                     const rotaAtual = `/clima/${encodeURIComponent(nomeBairro)}/${rota}`;
                     const ativo = location.pathname === rotaAtual;
-                    const desc = `${descricao}`;
                     return (
                         <div
-                            key={index}
+                            key={rota}
                             className={`aside-item ${ativo ? "ativo" : ""}`}
                             onClick={() => navigate(rotaAtual)}
-                            title={`${desc}`}
+                            title={descricao}
                         >
                             <span>{icon}</span>
                         </div>
                     );
                 })}
+
             </nav>
 
             <div className="aside-footer">
