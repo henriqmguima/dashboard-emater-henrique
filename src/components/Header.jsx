@@ -7,9 +7,10 @@ const icone = [<Plant size={40} />];
 
 const locais = [
     "IFSUL - Câmpus Charqueadas",
-    "Granja Käfer",
+    "Capororoca",
     "Granja Carola",
     "Guaíba City",
+    "Fazenda Umbu",
 ];
 
 export default function Header() {

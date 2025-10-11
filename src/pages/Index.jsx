@@ -20,9 +20,10 @@ let DefaultIcon = L.icon({
 
 const atalhos = [
   { label: "IFSUL", bairroNome: "IFSul - Câmpus Charqueadas" },
-  { label: "GRANJA KAFER", bairroNome: "Granja Käfer" },
+  { label: "CAPOROROCA", bairroNome: "Capororoca" },
   { label: "GRANJA CAROLA", bairroNome: "Granja Carola" },
   { label: "GUAIBA CITY", bairroNome: "Guaíba City" },
+  { label: "FAZENDA UMBU", bairroNome: "Fazenda Umbu" },
 ];
 
 const icones = [

@@ -42,7 +42,11 @@ export default function NuvensPage({ bairros }) {
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
-  const [dataExecucao, setDataExecucao] = useState("2025-09-29");
+  const ontem = new Date();
+  ontem.setDate(ontem.getDate() - 1);
+  const dataFormatada = ontem.toISOString().split("T")[0];
+
+  const [dataExecucao, setDataExecucao] = useState(dataFormatada);
   const [dados, setDados] = useState(null);
   const [dadosSemana, setDadosSemana] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,7 +54,8 @@ export default function NuvensPage({ bairros }) {
 
   const latitude = bairro?.lat;
   const longitude = bairro?.lng;
-  const token = "8bd352ea-5414-3729-aed5-b4867da78775";
+  const token = import.meta.env.VITE_CLIMAPI_TOKEN;
+
 
   const variaveisDisponiveis = [
     { nome: "hcdchcll", descricao: "Nuvens Altas (%)" },

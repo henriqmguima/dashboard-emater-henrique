@@ -36,7 +36,11 @@ export default function TempPage({ bairros }) {
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === nomeBairro);
 
-  const [dataExecucao, setDataExecucao] = useState("2025-10-05");
+  const ontem = new Date();
+  ontem.setDate(ontem.getDate() - 1);
+  const dataFormatada = ontem.toISOString().split("T")[0];
+
+  const [dataExecucao, setDataExecucao] = useState(dataFormatada);
   const [latitude] = useState(bairro.lat);
   const [longitude] = useState(bairro.lng);
 
@@ -45,7 +49,8 @@ export default function TempPage({ bairros }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "8bd352ea-5414-3729-aed5-b4867da78775";
+  const token = import.meta.env.VITE_CLIMAPI_TOKEN;
+
 
   const fetchVariavel = async (variavel, data) => {
     const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;

@@ -10,9 +10,10 @@ import InmetApiTest from "./pages/InmetApiTest";
 
 const bairros = [
   { nome: "IFSul - Câmpus Charqueadas", lat: -29.9642251, lng: -51.6290038 },
-  { nome: "Granja Käfer", lat: -30.0412793, lng: -51.6467932 },
+  { nome: "Capororoca", lat: -30.0412793, lng: -51.6467932 },
   { nome: "Granja Carola", lat: -29.9554248, lng: -51.5556481 },
-  { nome: "Guaíba City", lat: -30.03435, lng: -51.5785155 },
+  { nome: "Guaíba City", lat: -30.0016011, lng: -51.4928193 },
+  { nome: "Fazenda Umbu", lat: -29.9956883, lng: -51.6268506 },
 ];
 
 function App() {
