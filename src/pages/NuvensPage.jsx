@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -14,7 +13,7 @@ import {
   ArcElement,
 } from "chart.js";
 
-import Header from "../components/Header";
+//import Header from "../components/Header";
 import Aside from "../components/Aside";
 import "../styles/NuvensPage.css";
 
@@ -25,6 +24,7 @@ import {
   calcularHorasSolDia,
   calcularCoberturaTotal,
 } from "../utils/nuvensUtil";
+import { useParams } from "react-router-dom";
 
 ChartJS.register(
   Title,
@@ -38,19 +38,27 @@ ChartJS.register(
   ArcElement
 );
 
-export default function NuvensPage({ bairros }) {
+export default function NuvensPage({ bairros, dataExecucao, bairroSelecionado, setBairroSelecionado }) {
   const { nomeBairro } = useParams();
-  const bairro = bairros.find((b) => b.nome === nomeBairro);
+  const bairro = bairros.find((b) => b.nome === bairroSelecionado);
 
-  const [dataExecucao, setDataExecucao] = useState("2025-09-29");
+  //const hoje = new Date().toISOString().split("T")[0];
+
+  //const [selected, setSelected] = useState(bairro);
   const [dados, setDados] = useState(null);
   const [dadosSemana, setDadosSemana] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+    useEffect(() => {
+    if (nomeBairro && nomeBairro !== bairroSelecionado){
+      setBairroSelecionado(nomeBairro)
+    }
+  }, [nomeBairro, bairroSelecionado, setBairroSelecionado]);
+
   const latitude = bairro?.lat;
   const longitude = bairro?.lng;
-  const token = "356893be-dd98-328b-b9c4-e55067af506f";
+  const token = import.meta.env.VITE_CLIMAPI_TOKEN;
 
   const variaveisDisponiveis = [
     { nome: "hcdchcll", descricao: "Nuvens Altas (%)" },
@@ -60,8 +68,10 @@ export default function NuvensPage({ bairros }) {
     { nome: "sunsdsfc", descricao: "Horas de Sol (s)" },
   ];
 
-  // --- Função para buscar dados ---
+  //função para buscar dados
   const fetchData = useCallback(async () => {
+  if(!latitude || !longitude) return;
+
     setLoading(true);
     setError(null);
 
@@ -86,71 +96,70 @@ export default function NuvensPage({ bairros }) {
       setDadosSemana(semana);
     } catch (err) {
       setError(err.message || "Erro ao buscar dados");
+      setDados(null);
+      setDadosSemana([]);
     } finally {
       setLoading(false);
     }
   }, [dataExecucao, latitude, longitude]);
 
   useEffect(() => {
-    if (latitude && longitude) fetchData();
-  }, [fetchData, latitude, longitude]);
+    fetchData();
+  }, [fetchData]);
 
- // --- Preparar dados para gráficos ---
+  //tratamento dos dados
   const horas = dados?.[0]?.dados.map((d) => d.horas) || [];
-  const coberturaAlta = dados?.find((d) => d.nome === "hcdchcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
-  const coberturaMedia = dados?.find((d) => d.nome === "mcdcmcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
-  const coberturaBaixa = dados?.find((d) => d.nome === "lcdclcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
+  const coberturaAlta =
+    dados?.find((d) => d.nome === "hcdchcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
+  const coberturaMedia =
+    dados?.find((d) => d.nome === "mcdcmcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
+  const coberturaBaixa =
+    dados?.find((d) => d.nome === "lcdclcll")?.dados.map((d) => +d.valor.toFixed(2)) || [];
   const coberturaTotal = calcularCoberturaTotal(dados || []);
-  const horasSol = dados?.find(d => d.nome === "sunsdsfc")?.dados.map(d => +(d.valor / 3600).toFixed(2)) || [];
+  const horasSol =
+    dados?.find((d) => d.nome === "sunsdsfc")?.dados.map((d) => +(d.valor / 3600).toFixed(2)) ||
+    [];
   const horasSolDia = calcularHorasSolDia(dados || []);
-  const taxaEvaporacao = dados?.find(d => d.nome === "pevprsfc")?.dados.map(d => +d.valor.toFixed(2)) || [];
+  const taxaEvaporacao =
+    dados?.find((d) => d.nome === "pevprsfc")?.dados.map((d) => +d.valor.toFixed(2)) || [];
 
-  const totalHorasSol = +horasSolDia.toFixed(2);
+  const totalHorasSol = horasSolDia ? +horasSolDia.toFixed(2) : 0;
   const mediaCobertura = coberturaTotal.length
     ? +(coberturaTotal.reduce((acc, c) => acc + c, 0) / coberturaTotal.length).toFixed(2)
     : 0;
   const totalEvaporacao = +taxaEvaporacao.reduce((acc, e) => acc + e, 0).toFixed(2);
-  const isDiaEnsolarado = totalHorasSol >= 6;
 
-  // --- Opções de gráficos ---
-const opcoesCompactas = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { display: true, position: "bottom", labels: { boxWidth: 12 } },
-    tooltip: {
-      enabled: true,          // habilita tooltip
-      mode: 'nearest',        // pega o ponto mais próximo
-      intersect: false,       // não exige clicar exatamente no ponto
-      callbacks: {
-        label: function(context) {
-          // mostra o valor formatado apenas no hover
-          return `${context.dataset.label}: ${context.parsed.y}`;
-        }
-      }
-    },
-    datalabels: {
-      display: false
-    }
-  },
-  interaction: {
-    mode: 'nearest',
-    intersect: false
-  },
-  elements: {
-    point: {
-      radius: 3,        // tamanho do ponto
-      hoverRadius: 6    // tamanho do ponto ao passar o mouse
-    },
-    line: {
-      borderWidth: 2
-    },
-    bar: {
-      borderWidth: 1
-    }
-  }
-};
 
+  //config dos gráficos
+  const opcoesCompactas = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true, position: "bottom", labels: { boxWidth: 12 } },
+      tooltip: {
+        enabled: true,
+        mode: "nearest",
+        intersect: false,
+        callbacks: {
+          label: function (context) {
+            return `${context.dataset.label}: ${context.parsed.y}`;
+          },
+        },
+      },
+      datalabels: {
+        display: false,
+      },
+    },
+    interaction: {
+      mode: "nearest",
+      intersect: false,
+    },
+    elements: {
+      point: { radius: 3, hoverRadius: 6 },
+      line: { borderWidth: 2 },
+      bar: { borderWidth: 1 },
+    },
+  };
 
   const graficoLinhasNuvens = {
     labels: horas,
@@ -198,29 +207,28 @@ const opcoesCompactas = {
     ],
   };
 
+  
+  if (error) return <p className="error">{error}</p>;
+  if (loading) return <p className="loading">Carregando...</p>;
+
+  const classificacao =
+  totalHorasSol === 0 && mediaCobertura === 0
+    ? "Falha"
+    : totalHorasSol >= 6
+    ? "Ensolarado"
+    : "Nublado";
+
+
   return (
     <div className="layout-emater">
-      <Header />
+      {/* <Header /> */}
       <div className="layout-inferior">
         <Aside />
         <div className="conteudo-principal">
-          <h1>ClimAPI - Nuvens e Sol</h1>
-          <h2>{nomeBairro}</h2>
+          <h1>Nuvens e Sol</h1>
+          <h2>{bairroSelecionado}</h2>
 
-          <label>
-            Data de execução:{" "}
-            <input
-              className="input-data"
-              type="date"
-              value={dataExecucao}
-              onChange={(e) => setDataExecucao(e.target.value)}
-            />
-          </label>
-
-          {loading && <p className="loading">Carregando...</p>}
-          {error && <p className="error">{error}</p>}
-
-          {dados && (
+          {!error && dados && (
             <>
               {/* === Cards de Resumo === */}
               <div className="cards-resumo">
@@ -241,7 +249,7 @@ const opcoesCompactas = {
                 </div>
                 <div className="card resumo-classificacao">
                   <h4>📊 Classificação</h4>
-                  <p>{isDiaEnsolarado ? "Ensolarado" : "Nublado"}</p>
+                  <p>{classificacao}</p>
                   <small>Critério: ≥6h de sol</small>
                 </div>
               </div>
@@ -260,14 +268,29 @@ const opcoesCompactas = {
                       </tr>
                     </thead>
                     <tbody>
+                      {dadosSemana.length === 0 && (
+                        <tr>
+                          <td colSpan="4">Falha ao carregar dados</td>
+                        </tr>
+                      )}
                       {dadosSemana.map((dia, i) => (
                         <tr key={i}>
                           <td>{dia.data}</td>
-                          <td className={dia.horasSol >= 6 ? "sol" : "nublado"}>{dia.horasSol}h</td>
-                          <td className={dia.coberturaTotal > 50 ? "cobertura-alta" : "cobertura-baixa"}>
+                          <td
+                            className={dia.horasSol >= 6 ? "sol" : "nublado"}
+                          >
+                            {dia.horasSol}h
+                          </td>
+                          <td
+                            className={
+                              dia.coberturaTotal > 50
+                                ? "cobertura-alta"
+                                : "cobertura-baixa"
+                            }
+                          >
                             {dia.coberturaTotal}%
                           </td>
-                          <td>{dia.classificacao}</td>
+                          <td>{dia.classificacao || "Falha"}</td>
                         </tr>
                       ))}
                     </tbody>

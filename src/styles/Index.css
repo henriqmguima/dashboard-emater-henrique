@@ -101,7 +101,7 @@ h5 {
     /* espaço entre ícone e texto */
     padding: 0.75rem 1.5rem;
     font-size: 1.5rem;
-    max-width: 200px;
+    max-width: auto;
     background: #1b8211;
     border: none;
     border-radius: 10px;
@@ -110,6 +110,7 @@ h5 {
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
 }
 
 .botao-icone {
@@ -221,6 +222,7 @@ h5 {
 .footer img {
     height: 3.5rem;
     justify-content: center;
+    cursor: pointer;
 }
 
 .footer p {
@@ -258,74 +260,76 @@ h5 {
     }
 }
 
-/* Tablets em modo retrato */
+/* ====== Tablets em modo retrato ====== */
 @media (max-width: 1024px) {
     .meio {
         flex-direction: column;
-        padding: 3rem;
-        display: flex;
+        padding: 2rem;
         align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* Mostra o mapa novamente */
+    .meio-direita {
+        display: flex;
+        width: 100%;
+        margin-top: 2rem;
         justify-content: center;
     }
 
-    .meio-direita {
-        display: none;
+    .mapa-container {
+        width: 90%;
+        height: 300px;
     }
 
     .meio-esquerda {
         width: 100%;
-        text-align: justify;
+        text-align: center;
     }
 
     .titulo {
-        text-align: center;
+        font-size: 4rem;
     }
 
     .subtitulo {
-        text-align: center;
         font-size: 1.75rem;
     }
 
     .paragrafo {
+        font-size: 1.3rem;
         text-align: center;
-        font-size: 1.5rem;
         max-width: 100%;
     }
 
     .botoes-atalho {
         justify-content: center;
-        align-items: center;
         margin-top: 2rem;
+        flex-wrap: wrap;
     }
 
     .rodape {
-        margin-top: 1rem;
+        margin-top: 1.5rem;
     }
 }
 
-/* Smartphones em modo paisagem */
+/* ====== Smartphones ====== */
 @media (max-width: 767px) {
-    .botoes-inferiores {
-        display: none;
+    .meio {
+        padding: 1.5rem;
     }
 
-    .botoes-atalho {
-        flex-direction: column;
-        gap: 1rem;
+    .mapa-container {
+        width: 95%;
+        height: 250px;
     }
 
-    .botao-atalho {
-        font-size: 1.5rem;
-        max-width: 100%;
-        justify-content: center;
+    .meio-direita {
+        margin-top: 1.5rem;
     }
 
-}
-
-/* Smartphones em modo retrato */
-@media (max-width: 480px) {
     .titulo {
-        font-size: 3.5rem;
+        font-size: 3rem;
     }
 
     .subtitulo {
@@ -333,9 +337,28 @@ h5 {
     }
 
     .paragrafo {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
+    .botoes-atalho {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
 
+    .botao-atalho {
+        width: 100%;
+        max-width: 300px;
+    }
 
+    .botoes-inferiores {
+        display: none;
+    }
+}
+
+/* ====== Smartphones pequenos ====== */
+@media (max-width: 480px) {
+    .mapa-container {
+        height: 200px;
+    }
 }
