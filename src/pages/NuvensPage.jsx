@@ -207,9 +207,6 @@ export default function NuvensPage({ bairros, dataExecucao, bairroSelecionado, s
     ],
   };
 
-  
-  if (error) return <p className="error">{error}</p>;
-  if (loading) return <p className="loading">Carregando...</p>;
 
   const classificacao =
   totalHorasSol === 0 && mediaCobertura === 0
@@ -227,6 +224,9 @@ export default function NuvensPage({ bairros, dataExecucao, bairroSelecionado, s
         <div className="conteudo-principal">
           <h1>Nuvens e Sol</h1>
           <h2>{bairroSelecionado}</h2>
+
+          {loading && <p className="loading">Carregando...</p>}
+          {error && <p className="error">{error}</p>}
 
           {!error && dados && (
             <>
