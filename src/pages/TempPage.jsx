@@ -18,7 +18,7 @@ import Header from "../components/Header";
 import Aside from "../components/Aside";
 import "../styles/TempPage.css";
 import "../styles/Layout.css";
-import "../Index.css";
+import "../styles/Index.css";
 ChartJS.register(ChartDataLabels);
 
 ChartJS.register(
@@ -36,9 +36,11 @@ export default function TempPage({ bairros, dataExecucao, bairroSelecionado, set
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === bairroSelecionado);
 
+
   //const [dataExecucao, setDataExecucao] = useState("2025-09-25");
   const latitude = bairro?.lat;
   const longitude = bairro?.lng;
+
 
   const [dadosHoje, setDadosHoje] = useState(null);
   const [dadosSemana, setDadosSemana] = useState([]);
@@ -52,6 +54,7 @@ export default function TempPage({ bairros, dataExecucao, bairroSelecionado, set
     setBairroSelecionado(nomeBairro)
   }
 }, [nomeBairro, bairroSelecionado, setBairroSelecionado]);
+
 
   const fetchVariavel = async (variavel, data) => {
     const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
@@ -144,7 +147,7 @@ export default function TempPage({ bairros, dataExecucao, bairroSelecionado, set
 {/*       <Header /> */}
       <div className="layout-inferior">
         <Aside />
-        <div className="conteudo-principal" style={{ padding: "20px" }}>
+        <div className="conteudo-principal" >
           <h1>Temperatura e Condição do Ar</h1>
           <h2>{bairroSelecionado}</h2>
 
@@ -166,21 +169,42 @@ export default function TempPage({ bairros, dataExecucao, bairroSelecionado, set
             {dadosHoje && (
               <div className="card">
                 <h3>Temperatura Atual</h3>
-                <div className="buttons-container">
-                  <button>Atual: {dadosHoje.atual}°C</button>
-                  <button>Ponto de Orvalho: {dadosHoje.orvalho}°C</button>
+                <div className="buttons-container2">
+                  <div className="buttons-container">
+                    <button>
+                      <strong className="dados">{dadosHoje.atual}°C</strong>
+                      Atual
+                    </button>
+                    <button>
+                      <strong className="dados">{dadosHoje.orvalho}°C</strong>
+                      Ponto de Orvalho
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
-            {/* === Bloco 2: Variação Térmica === */}
             {dadosHoje && (
               <div className="card">
                 <h3>Variação Térmica</h3>
-                <button>Máx: {dadosHoje.max}°C</button>
-                <button>Mín: {dadosHoje.min}°C</button>
-                <button>Amplitude: {dadosHoje.amplitude}°C</button>
+                <div className="buttons-container2">
+                  <div className="btns">
+                    <button className="btn-max">
+                      <strong className="dados">{dadosHoje.max}°C</strong>
+                      Máxima
+                    </button>
+                    <button className="btn-min">
+                      <strong className="dados">{dadosHoje.min}°C</strong>
+                      Mínima
+                    </button>
+                  </div>
+                  <button className="btn-am">
+                    <strong className="dados">{dadosHoje.amplitude}°C</strong>
+                    Amplitude
+                  </button>
+                </div>
               </div>
             )}
+
 
             {/* === Bloco 3: Variação Semanal === */}
 
@@ -212,7 +236,7 @@ export default function TempPage({ bairros, dataExecucao, bairroSelecionado, set
                         <td>{d.max}°C</td>
                         <td>{d.min}°C</td>
                         {/* Exibe a variação com duas casas decimais */}
-                        <td>{d.variacao.toFixed(2)}°C</td>
+                        <td>{d.variacao}°C</td>
                       </tr>
                     ))}
                   </tbody>

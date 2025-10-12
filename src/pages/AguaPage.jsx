@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Line, Bar } from "react-chartjs-2";
+
 import {
     Chart as ChartJS,
     Title,
@@ -161,70 +162,71 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
                     {loading && <p className="loading">Carregando...</p>}
                     {error && <p className="error">{error}</p>}
 
-                    {dados && (
-                        <>
-                            <div className="cards-resumo">
-                                <div className="card resumo-umidade">
-                                    <h4>💧 Umidade Média</h4>
-                                    <p className="valor-umidade">{mediaUmidade}%</p>
-                                    <small>Camada 0–10 cm</small>
-                                </div>
-                                <div className="card resumo-chuva">
-                                    <h4>🌧️ Chuva Total</h4>
-                                    <p className="valor-chuva">{totalChuva} mm</p>
-                                    <small>Acumulada do dia</small>
-                                </div>
-                                <div className="card resumo-classificacao">
-                                    <h4>📊 Classificação</h4>
-                                    <p>{classificacaoDia}</p>
-                                </div>
-                            </div>
+                {dados && (
+                <div>
+                    <div className="cards-resumo">
+                    <div className="card resumo-umidade">
+                        <h4>💧 Umidade Média</h4>
+                        <p className="valor-umidade">{mediaUmidade}%</p>
+                        <small>Camada 0–10 cm</small>
+                    </div>
+                    <div className="card resumo-chuva">
+                        <h4>🌧️ Chuva Total</h4>
+                        <p className="valor-chuva">{totalChuva} mm</p>
+                        <small>Acumulada do dia</small>
+                    </div>
+                    <div className="card resumo-classificacao">
+                        <h4>📊 Classificação</h4>
+                        <p>{classificacaoDia}</p>
+                    </div>
+                    </div>
 
-                            <div className="card">
-                                <h3>📅 Histórico Semanal de Umidade e Chuva</h3>
-                                <div style={{ overflowX: "auto" }}>
-                                    <table className="tabela-semana">
-                                        <thead>
-                                            <tr>
-                                                <th>Data</th>
-                                                <th>Umidade (%)</th>
-                                                <th>Chuva (mm)</th>
-                                                <th>Classificação</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {dadosSemana.map((dia, i) => (
-                                                <tr key={i}>
-                                                    <td>{dia.data}</td>
-                                                    <td>{dia.umidade}</td>
-                                                    <td>{dia.chuva}</td>
-                                                    <td>{dia.classificacao}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                    <div className="card">
+                    <h3>📅 Histórico Semanal de Umidade e Chuva</h3>
+                    <div style={{ overflowX: "auto" }}>
+                        <table className="tabela-semana">
+                        <thead>
+                            <tr>
+                            <th>Data</th>
+                            <th>Umidade (%)</th>
+                            <th>Chuva (mm)</th>
+                            <th>Classificação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {dadosSemana.map((dia, i) => (
+                            <tr key={i}>
+                                <td>{dia.data}</td>
+                                <td>{dia.umidade}</td>
+                                <td>{dia.chuva}</td>
+                                <td>{dia.classificacao}</td>
+                            </tr>
+                            ))}
+                        </tbody>
+                        </table>
+                    </div>
+                    </div>
 
-                            <div className="graficos-verticais">
-                                <div className="card">
-                                    <h3>Umidade do Solo ao Longo do Dia</h3>
-                                    <div className="grafico-container">
-                                        <Line data={graficoUmidade} options={opcoes} />
-                                    </div>
-                                </div>
+                    <div className="graficos-verticais">
+                    <div className="card">
+                        <h3>Umidade do Solo ao Longo do Dia</h3>
+                        <div className="grafico-container">
+                        <Line data={graficoUmidade} options={opcoes} />
+                        </div>
+                    </div>
 
-                                <div className="card">
-                                    <h3>Chuva Acumulada ao Longo do Dia</h3>
-                                    <div className="grafico-container">
-                                        <Bar data={graficoChuva} options={opcoes} />
-                                    </div>
-                                </div>
-                            </div>
-                        </>
-                    )}
+                    <div className="card">
+                        <h3>Chuva Acumulada ao Longo do Dia</h3>
+                        <div className="grafico-container">
+                        <Bar data={graficoChuva} options={opcoes} />
+                        </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
+                )}
         </div>
-    );
+    </div>
+  </div>
+);
 }
+
