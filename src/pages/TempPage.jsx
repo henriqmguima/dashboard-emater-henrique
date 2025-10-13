@@ -64,8 +64,8 @@ export default function TempPage({ bairros }) {
 
   // Função auxiliar para formatar a data para DD/MM/YY
   const formatarData = (data) => {
-    const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
-    return new Date(data).toLocaleDateString('pt-BR', options);
+    const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
+    return new Date(data).toLocaleDateString("pt-BR", options);
   };
 
   const fetchHoje = useCallback(async () => {
@@ -78,8 +78,10 @@ export default function TempPage({ bairros }) {
       ]);
 
       const horaAtual = new Date().getHours();
-      const tempAgora = tempAtual.find((d) => d.horas === `${horaAtual}:00`) || tempAtual[0];
-      const orvalhoAgora = orvalho.find((d) => d.horas === `${horaAtual}:00`) || orvalho[0];
+      const tempAgora =
+        tempAtual.find((d) => d.horas === `${horaAtual}:00`) || tempAtual[0];
+      const orvalhoAgora =
+        orvalho.find((d) => d.horas === `${horaAtual}:00`) || orvalho[0];
 
       setDadosHoje({
         atual: tempAgora.valor,
@@ -184,10 +186,15 @@ export default function TempPage({ bairros }) {
                 <button className="highlight-button">
                   Maior Variação:{" "}
                   {/* Exibe a maior variação com duas casas decimais */}
-                  {Math.max(...dadosSemana.map((d) => d.variacao)).toFixed(2)}°C em{" "}
-                  {dadosSemana.find(
-                    (d) => d.variacao === Math.max(...dadosSemana.map((x) => x.variacao))
-                  ).data}
+                  {Math.max(...dadosSemana.map((d) => d.variacao)).toFixed(2)}°C
+                  em{" "}
+                  {
+                    dadosSemana.find(
+                      (d) =>
+                        d.variacao ===
+                        Math.max(...dadosSemana.map((x) => x.variacao))
+                    ).data
+                  }
                 </button>
 
                 <table>
@@ -213,7 +220,6 @@ export default function TempPage({ bairros }) {
                 </table>
               </div>
             )}
-
 
             {/* === Bloco 4: Probabilidade de Orvalho === */}
             {dadosSemana.length > 0 && (
@@ -267,8 +273,6 @@ export default function TempPage({ bairros }) {
                 </div>
               </div>
             )}
-
-
           </div>
         </div>
       </div>

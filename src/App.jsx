@@ -4,6 +4,7 @@ import Index from "./pages/Index";
 import TempPage from "./pages/TempPage";
 import NuvensPage from "./pages/NuvensPage";
 import InmetApiTest from "./pages/InmetApiTest";
+import DadosPage from "./pages/DadosPage";
 
 const bairros = [
   { nome: "IFSul - Câmpus Charqueadas", lat: -29.9642251, lng: -51.6290038 },
@@ -31,7 +32,10 @@ function App() {
 
         {/* Futuras rotas comentadas */}
         {/* <Route path="/clima/:nomeBairro/agua" element={<AguaPage bairros={bairros} />} /> */}
-        {/* <Route path="/clima/:nomeBairro/dados" element={<DadosPage bairros={bairros} />} /> */}
+        <Route
+          path="/clima/:nomeBairro/dados"
+          element={<DadosPage bairros={bairros} />}
+        />
         <Route path="/api/inmet" element={<InmetApiTest />} />
       </Routes>
     </Router>
