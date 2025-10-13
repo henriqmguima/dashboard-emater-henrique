@@ -37,19 +37,18 @@ export const fetchDataDia = async (
   data, latitude, longitude, token, variaveisDisponiveis
 ) => {
   if (!Array.isArray(variaveisDisponiveis)) variaveisDisponiveis = [];
-  
+
   const resultados = await Promise.all(
     variaveisDisponiveis.map(async (v) => {
       const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${v.nome}/${data}/${longitude}/${latitude}`;
-      try {
-        const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-        if (!response.ok) throw new Error(`Erro: ${response.status}`);
-        const result = await response.json();
-        return { nome: v.nome, dados: result };
-      } catch (err) {
-        console.error(`Erro fetch ${v.nome} dia ${data}:`, err);
-        return { nome: v.nome, dados: [] };
+      const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+
+      if (!response.ok) {
+        throw new Error(`Erro ${v.nome}: ${response.status} `);
       }
+
+      const result = await response.json();
+      return { nome: v.nome, dados: result };
     })
   );
 
@@ -67,33 +66,24 @@ export const fetchDadosSemana = async (
     data.setDate(data.getDate() - i);
     const dataString = data.toISOString().slice(0, 10);
 
-    try {
-      const dadosDia = await fetchDataDiaFn(dataString, latitude, longitude, token, variaveisDisponiveis);
+    const dadosDia = await fetchDataDiaFn(dataString, latitude, longitude, token, variaveisDisponiveis);
 
-      const horasSol = calcularHorasSolDia(dadosDia);
-      const horasSolDia = Math.min(horasSol, 24);
-      const coberturaTotal = calcularCoberturaTotal(dadosDia);
-      const mediaCobertura = coberturaTotal.length
-        ? coberturaTotal.reduce((acc, c) => acc + c, 0) / coberturaTotal.length
-        : 0;
-
-      semana.push({
-        data: formatarData(data),
-        //horasSol: Number(horasSolDia.toFixed(2)), formato 24 horas
-        horasSol: Number(horasSol.toFixed(2)),
-        coberturaTotal: Number(mediaCobertura.toFixed(2)),
-        classificacao: horasSol >= 6 ? "Sol" : "Nublado",
-      });
-
-    } catch (err) {
-      console.error(`Erro semana:`, err);
-      semana.push({
-        data: formatarData(data),
-        horasSol: 0,
-        coberturaTotal: 0,
-        classificacao: "❌ Falha",
-      });
+    if (!dadosDia || !dadosDia.length) {
+      throw new Error(`Falha ao buscar dados do dia ${dataString}`);
     }
+
+    const horasSol = calcularHorasSolDia(dadosDia);
+    const coberturaTotal = calcularCoberturaTotal(dadosDia);
+    const mediaCobertura = coberturaTotal.length
+      ? coberturaTotal.reduce((acc, c) => acc + c, 0) / coberturaTotal.length
+      : 0;
+
+    semana.push({
+      data: formatarData(data),
+      horasSol: Number(horasSol.toFixed(2)),
+      coberturaTotal: Number(mediaCobertura.toFixed(2)),
+      classificacao: horasSol >= 6 ? "Sol" : "Nublado",
+    });
   }
 
   return semana.reverse();

@@ -5,19 +5,19 @@ import "../styles/DadosPage.css";
 import "../styles/Carregando.css";
 
 export default function Carregando() {
-  const [pontos, setPontos] = useState("");
+const [pontos, setPontos] = useState("");
 
-  useEffect(() => {
+useEffect(() => {
     const intervalo = setInterval(() => {
-      setPontos((prev) => (prev.length < 3 ? prev + "." : ""));
+    setPontos((prev) => (prev.length < 3 ? prev + "." : ""));
     }, 500);
 
     return () => clearInterval(intervalo);
-  }, []);
+}, []);
 
-  return (
+return (
     <div className="card card--carregando">
-      <p className="texto-carregando">Carregando{pontos}</p>
+    <p className="texto-carregando">Carregando{pontos}</p>
     </div>
-  );
+);
 }

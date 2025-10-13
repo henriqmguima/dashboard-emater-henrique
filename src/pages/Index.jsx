@@ -38,7 +38,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 const Index = ({ bairros }) => {
   const navigate = useNavigate();
 
-  // Agora já manda para a rota padrão: temperatura
+  //manda para a rota padrão: temperatura
   const irParaBairro = (nome) => {
     navigate(`/clima/${nome}/temperatura`);
   };
@@ -46,6 +46,7 @@ const Index = ({ bairros }) => {
   return (
     <div className="pagina-emater">
       {/* BLOCO DO MEIO */}
+
       <div className="meio">
         {/* ESQUERDA */}
         <div className="meio-esquerda">

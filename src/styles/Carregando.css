@@ -1,12 +1,12 @@
 .card--carregando {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
-  height: 100px;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 300px;
+height: 100px;
 }
 
 .texto-carregando {
-  font-size: 27px;
-  font-weight: 700;
+font-size: 27px;
+font-weight: 700;
 }

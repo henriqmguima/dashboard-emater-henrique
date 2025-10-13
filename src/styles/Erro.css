@@ -1,18 +1,18 @@
 .card--erro {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 250px;
-  height: 100px;
-  padding: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 250px;
+height: 100px;
+padding: 50px;
 }
 
 .erro-titulo {
-  font-size: 25px;
-  font-weight: 700;
-  color: #ffcdd2;
+font-size: 25px;
+font-weight: 700;
+color: #ffcdd2;
 }
 
 .erro-descricao {
-  font-size: 18px;
+font-size: 18px;
 }

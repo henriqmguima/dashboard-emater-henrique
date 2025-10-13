@@ -14,6 +14,10 @@ body {
     /* permite quebra em telas pequenas */
 }
 
+.oculto {
+    display: none;
+}
+
 .header-title {
     margin: 0 10px 0 70px;
     font-size: 40px;
@@ -378,6 +382,7 @@ input[type="date"].input-header::-webkit-calendar-picker-indicator:hover {
 @media (max-width: 480px) {
     .header-title {
         font-size: 20px;
+        width: 100%;
     }
 
     .dropdown {
