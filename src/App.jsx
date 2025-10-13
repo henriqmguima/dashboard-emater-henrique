@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import TempPage from "./pages/TempPage";
 import NuvensPage from "./pages/NuvensPage";
 import AguaPage from "./pages/AguaPage";
-/* import DadosPage from "./pages/DadosPage" */
+import DadosPage from "./pages/DadosPage"
 
 const bairros = [
   { nome: "IFSul - Câmpus Charqueadas", lat: -29.9642251, lng: -51.6290038 },
@@ -64,6 +64,18 @@ function AppContent() {
           path="/clima/:nomeBairro/agua"
           element={
             <AguaPage
+              bairros={bairros}
+              dataExecucao={dataExecucao}
+              bairroSelecionado={bairroSelecionado}
+              setBairroSelecionado={setBairroSelecionado}
+            />
+          }
+        />
+
+          <Route
+          path="/clima/:nomeBairro/dados"
+          element={
+            <DadosPage
               bairros={bairros}
               dataExecucao={dataExecucao}
               bairroSelecionado={bairroSelecionado}
