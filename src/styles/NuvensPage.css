@@ -70,7 +70,7 @@ h2 {
   gap: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   width: 100%;
-  max-width: 300px;
+  max-width: 250px;
   margin: 0 auto;
 }
 
@@ -187,6 +187,12 @@ h2 {
     align-items: center;
   }
 
+  .card{
+    margin-left: 25px;
+    margin-right: 25px;
+    width: auto;
+  }
+
   .graficos-verticais {
     flex-direction: column;
     align-items: center;
@@ -211,6 +217,12 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .card{
+    margin-left: 25px;
+    margin-right: 25px;
+    width: auto;
+  }
+
   .graficos-verticais {
     flex-direction: column;
     align-items: center;
@@ -230,6 +242,12 @@ h2 {
 @media (max-width: 480px) {
   .conteudo-principal {
     padding: 10px;
+  }
+
+  .card{
+    margin-left: 25px;
+    margin-right: 25px;
+    width: auto;
   }
 
   .graficos-verticais .card {

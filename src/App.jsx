@@ -1,6 +1,7 @@
 // App.jsx
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Index from "./pages/Index";
 import TempPage from "./pages/TempPage";
@@ -16,66 +17,69 @@ const bairros = [
   { nome: "Fazenda Umbu", lat: -29.9956883, lng: -51.6268506 },
 ];
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isIndex = location.pathname === "/";
 
   const [dataExecucao, setDataExecucao] = useState(new Date().toISOString().slice(0, 10));
   const [bairroSelecionado, setBairroSelecionado] = useState(bairros[0].nome);
 
   return (
-    <Router>
-      <Header
-        bairros={bairros}
-        dataExecucao={dataExecucao}
-        setDataExecucao={setDataExecucao}
-        bairroSelecionado={bairroSelecionado}
-        setBairroSelecionado={setBairroSelecionado}
-      />
+    <>
+      {!isIndex && (
+        <Header
+          bairros={bairros}
+          dataExecucao={dataExecucao}
+          setDataExecucao={setDataExecucao}
+          bairroSelecionado={bairroSelecionado}
+          setBairroSelecionado={setBairroSelecionado}
+        />
+      )}
 
       <Routes>
-        {/* Página inicial com o mapa */}
         <Route path="/" element={<Index bairros={bairros} />} />
-
-        {/* Rotas de clima específicas */}
         <Route
           path="/clima/:nomeBairro/temperatura"
-          element={<TempPage
+          element={
+            <TempPage
               bairros={bairros}
               dataExecucao={dataExecucao}
               bairroSelecionado={bairroSelecionado}
               setBairroSelecionado={setBairroSelecionado}
-            />}
+            />
+          }
         />
         <Route
           path="/clima/:nomeBairro/nuvens"
-          element={ <NuvensPage
+          element={
+            <NuvensPage
               bairros={bairros}
               dataExecucao={dataExecucao}
               bairroSelecionado={bairroSelecionado}
               setBairroSelecionado={setBairroSelecionado}
-            />}
+            />
+          }
         />
-
-        {<Route path="/clima/:nomeBairro/agua" 
-          element={ <AguaPage
+        <Route
+          path="/clima/:nomeBairro/agua"
+          element={
+            <AguaPage
               bairros={bairros}
               dataExecucao={dataExecucao}
               bairroSelecionado={bairroSelecionado}
               setBairroSelecionado={setBairroSelecionado}
-            />}
-        />}
-
-
-{/*         {<Route path="/clima/:nomeBairro/dados" 
-          element={ <DadosPage
-              bairros={bairros}
-              dataExecucao={dataExecucao}
-              bairroSelecionado={bairroSelecionado}
-              setBairroSelecionado={setBairroSelecionado}
-            />}
-        />} */}
+            />
+          }
+        />
       </Routes>
-    </Router>
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}

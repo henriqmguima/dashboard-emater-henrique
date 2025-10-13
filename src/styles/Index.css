@@ -50,6 +50,7 @@ h5 {
     position: relative;
     display: inline-block;
     margin-bottom: 25px;
+    text-align: left;
 }
 
 .titulo::before {
@@ -91,7 +92,6 @@ h5 {
     gap: 1rem;
     flex-wrap: wrap;
     align-items: center;
-
 }
 
 .botao-atalho {
@@ -254,7 +254,7 @@ h5 {
 
     .botao-atalho {
         font-size: 0.8rem;
-        max-width: 120px;
+        max-width: fit-content;
         display: flex;
         justify-content: center;
     }

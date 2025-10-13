@@ -46,6 +46,7 @@ const Index = ({ bairros }) => {
   return (
     <div className="pagina-emater">
       {/* BLOCO DO MEIO */}
+
       <div className="meio">
         {/* ESQUERDA */}
         <div className="meio-esquerda">
