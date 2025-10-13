@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-import "../styles/index.css";
+import "../styles/Index.css";
 import { MapPinPlus, ThermometerHot, Drop, CloudSun, ChartBar } from "@phosphor-icons/react";
 
 // Configuração do ícone padrão do Leaflet
@@ -20,9 +20,10 @@ let DefaultIcon = L.icon({
 
 const atalhos = [
   { label: "IFSUL", bairroNome: "IFSul - Câmpus Charqueadas" },
-  { label: "GRANJA KAFER", bairroNome: "Granja Käfer" },
+  { label: "CAPOROROCA", bairroNome: "Capororoca" },
   { label: "GRANJA CAROLA", bairroNome: "Granja Carola" },
   { label: "GUAIBA CITY", bairroNome: "Guaíba City" },
+  { label: "FAZENDA UMBU", bairroNome: "Fazenda Umbu" },
 ];
 
 const icones = [
@@ -125,7 +126,7 @@ const Index = ({ bairros }) => {
         {/* Footer */}
         <div className="footer">
           <p>Desenvolvido na disciplina de Extensão</p>
-          <img src="/ifsul.png" alt="IFSUL" />
+          <img src="/ifsul.png" alt="IFSUL" onClick={() => navigate(`api/inmet`)} />
         </div>
       </div>
     </div>

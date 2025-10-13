@@ -7,9 +7,10 @@ const icone = [<Plant size={40} />];
 
 const locais = [
     "IFSUL - Câmpus Charqueadas",
-    "Granja Käfer",
+    "Capororoca",
     "Granja Carola",
     "Guaíba City",
+    "Fazenda Umbu",
 ];
 
 export default function Header() {
@@ -61,15 +62,16 @@ export default function Header() {
                         nodeRef={nodeRef}
                     >
                         <ul className="dropdown-list" ref={nodeRef}>
-                            {locais.map((item, i) => (
+                            {locais.map((item) => (
                                 <li
-                                    key={i}
+                                    key={item}
                                     className="dropdown-item"
                                     onClick={() => handleSelect(item)}
                                 >
                                     {item}
                                 </li>
                             ))}
+
                         </ul>
                     </CSSTransition>
                 </div>
