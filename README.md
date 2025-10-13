@@ -32,6 +32,10 @@ O OpenStreetMap (OSM) é uma fonte de dados de mapas gratuita e de código abert
 
 Em resumo, a escolha dessas ferramentas foi baseada em uma combinação de fatores: elas são gratuitas, amplamente utilizadas na comunidade e se integram de forma coesa para oferecer uma solução completa e eficiente para o projeto.
 
+****Caso erro 429, token expirou e deve ser gerado novamente. Para isso, seguir instruções do arquivo agroapi-primeiros-passos-token.pdf.
+***Após gerar token, substituir no arquivo .env
+
+
 ### Instalação de Pacotes
 `npm install`
 `npm install @phosphor-icons/react`
