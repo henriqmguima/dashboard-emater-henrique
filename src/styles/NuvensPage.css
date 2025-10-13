@@ -1,0 +1,244 @@
+/* --- Layout principal --- */
+.layout-emater {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-inferior {
+  display: flex;
+  flex: 1;
+}
+
+/* --- Conteúdo principal --- */
+.conteudo-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--green-dark, #1a240c);
+  color: var(--green-offwhite, #f4f8f2);
+  padding: 20px;
+}
+
+/* --- Títulos --- */
+h1 {
+  text-align: center;
+  margin-bottom: 0px;
+  color: var(--green-light, #ecfde4);
+}
+
+h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: var(--green-medium, #A5D01B);
+}
+
+/* --- Campo de data --- */
+.input-data {
+  background-color: var(--green-offwhite, #f4f8f2);
+  border: 1px solid var(--green-medium, #A5D01B);
+  border-radius: 5px;
+  padding: 5px;
+  color: var(--green-text, #3c4a2e);
+  margin-left: 10px;
+}
+
+/* --- Mensagens --- */
+.loading {
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+}
+
+/* --- Cards Resumo --- */
+.cards-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin: 10px 0 30px 0;
+}
+
+.cards-resumo .card {
+  background-color: var(--gray, #202c0f);
+  color: var(--green-offwhite, #f4f8f2);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.cards-resumo .card h4 {
+  margin-bottom: 5px;
+}
+
+.cards-resumo .card p {
+  margin: 5px 0;
+}
+
+.cards-resumo .card small {
+  margin-top: 2px;
+}
+
+.card {
+  margin-bottom: 10px;
+}
+
+/* --- Gráficos Verticais --- */
+.graficos-verticais {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.graficos-verticais .card {
+  color: var(--green-text, #3c4a2e);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.graficos-verticais .grafico-container {
+  height: 300px;
+  max-height: 400px;
+  min-height: 250px;
+  width: 100%;
+}
+
+/* --- Container gráfico genérico --- */
+.grafico-container {
+  height: 250px;
+  max-height: 400px;
+  min-height: 200px;
+  width: 100%;
+}
+
+/* --- Tabela detalhada da semana --- */
+.tabela-semana {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tabela-semana th, .tabela-semana td {
+  padding: 12px 15px;
+  border: 1px solid #bdc3c7;
+  text-align: center;
+}
+
+.tabela-semana th {
+  background-color: var(--green-strong, #1B8211);
+  color: var(--green-light, #122f05);
+  font-weight: 500;
+}
+
+.tabela-semana tr:nth-child(even) {
+  background-color: #89b87b;
+}
+
+.tabela-semana tr:nth-child(odd) {
+  background-color: #6e9464;
+}
+
+.tabela-semana tr:hover {
+  background-color: #a7dcbd;
+  transition: background-color 0.2s ease;
+}
+
+.tabela-semana .sol, .tabela-semana .nublado {
+  color: #042a13;
+  font-weight: bold;
+}
+
+.tabela-semana .cobertura-alta, .tabela-semana .cobertura-baixa {
+  color: #042a13;
+  font-weight: 500;
+}
+
+/* --- Legibilidade de gráficos --- */
+.chartjs-render-monitor {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Labels e legenda */
+.chartjs-label, .chartjs-legend {
+  font-size: 14px !important;
+}
+
+.graph-container {
+  background-color: #f4f8f2;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 1200px) {
+  .cards-resumo {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .graficos-verticais {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .graficos-verticais .card {
+    width: 90%;
+    max-width: 500px;
+  }
+
+  .grafico-container {
+    height: 220px;
+  }
+
+  .tabela-semana {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .graficos-verticais {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .graficos-verticais .card {
+    width: 95%;
+    max-width: 400px;
+  }
+
+  .grafico-container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .conteudo-principal {
+    padding: 10px;
+  }
+
+  .graficos-verticais .card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.2rem;
+  }
+}
