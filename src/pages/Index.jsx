@@ -20,9 +20,10 @@ let DefaultIcon = L.icon({
 
 const atalhos = [
   { label: "IFSUL", bairroNome: "IFSul - Câmpus Charqueadas" },
-  { label: "GRANJA KAFER", bairroNome: "Granja Käfer" },
+  { label: "CAPOROROCA", bairroNome: "Capororoca" },
   { label: "GRANJA CAROLA", bairroNome: "Granja Carola" },
   { label: "GUAIBA CITY", bairroNome: "Guaíba City" },
+  { label: "FAZENDA UMBU", bairroNome: "Fazenda Umbu" },
 ];
 
 const icones = [
@@ -37,7 +38,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 const Index = ({ bairros }) => {
   const navigate = useNavigate();
 
-  // Agora já manda para a rota padrão: temperatura
+  //manda para a rota padrão: temperatura
   const irParaBairro = (nome) => {
     navigate(`/clima/${nome}/temperatura`);
   };
@@ -45,6 +46,7 @@ const Index = ({ bairros }) => {
   return (
     <div className="pagina-emater">
       {/* BLOCO DO MEIO */}
+
       <div className="meio">
         {/* ESQUERDA */}
         <div className="meio-esquerda">

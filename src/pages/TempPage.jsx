@@ -32,20 +32,29 @@ ChartJS.register(
   BarElement
 );
 
-export default function TempPage({ bairros }) {
+export default function TempPage({ bairros, dataExecucao, bairroSelecionado, setBairroSelecionado }) {
   const { nomeBairro } = useParams();
-  const bairro = bairros.find((b) => b.nome === nomeBairro);
+  const bairro = bairros.find((b) => b.nome === bairroSelecionado);
 
-  const [dataExecucao, setDataExecucao] = useState("2025-10-05");
-  const [latitude] = useState(bairro.lat);
-  const [longitude] = useState(bairro.lng);
+
+  //const [dataExecucao, setDataExecucao] = useState("2025-09-25");
+  const latitude = bairro?.lat;
+  const longitude = bairro?.lng;
+
 
   const [dadosHoje, setDadosHoje] = useState(null);
   const [dadosSemana, setDadosSemana] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "8bd352ea-5414-3729-aed5-b4867da78775";
+  const token = import.meta.env.VITE_CLIMAPI_TOKEN;
+
+  useEffect(() => {
+  if (nomeBairro && nomeBairro !== bairroSelecionado){
+    setBairroSelecionado(nomeBairro)
+  }
+}, [nomeBairro, bairroSelecionado, setBairroSelecionado]);
+
 
   const fetchVariavel = async (variavel, data) => {
     const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${variavel}/${data}/${longitude}/${latitude}`;
@@ -135,12 +144,12 @@ export default function TempPage({ bairros }) {
   // === Render ===
   return (
     <div className="layout-emater">
-      <Header />
+{/*       <Header /> */}
       <div className="layout-inferior">
         <Aside />
         <div className="conteudo-principal" >
           <h1>Temperatura e Condição do Ar</h1>
-          <h2>{nomeBairro}</h2>
+          <h2>{bairroSelecionado}</h2>
 
           {/* <label>
             Data de execução:{" "}

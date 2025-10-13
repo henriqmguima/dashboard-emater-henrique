@@ -70,7 +70,7 @@ h2 {
   gap: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   width: 100%;
-  max-width: 300px;
+  max-width: 250px;
   margin: 0 auto;
 }
 
@@ -178,16 +178,6 @@ h2 {
 }
 
 /* --- Responsividade --- */
-@media (max-width: 1650px) {
-  .grafico-container {
-    height: 250px;
-  }
-
-  .tabela-semana {
-    max-width: 100%;
-  }
-}
-
 @media (max-width: 1200px) {
   .cards-resumo {
     grid-template-columns: 1fr;
@@ -197,17 +187,28 @@ h2 {
     align-items: center;
   }
 
+  .card{
+    margin-left: 25px;
+    margin-right: 25px;
+    width: auto;
+  }
+
+  .graficos-verticais {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .graficos-verticais .card {
+    width: 90%;
+    max-width: 500px;
+  }
+
   .grafico-container {
     height: 220px;
   }
 
   .tabela-semana {
     max-width: 100%;
-  }
-
-  .card {
-    width: 90%;
-    max-width: 350px;
   }
 }
 
@@ -216,7 +217,46 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .card{
+    margin-left: 25px;
+    margin-right: 25px;
+    width: auto;
+  }
+
+  .graficos-verticais {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .graficos-verticais .card {
+    width: 95%;
+    max-width: 400px;
+  }
+
   .grafico-container {
     height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .conteudo-principal {
+    padding: 10px;
+  }
+
+  .card{
+    margin-left: 25px;
+    margin-right: 25px;
+    width: auto;
+  }
+
+  .graficos-verticais .card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.2rem;
   }
 }

@@ -1,0 +1,67 @@
+@import "./NuvensPage.css";
+
+/* Personalização de cards da página Água */
+.resumo-umidade {
+    background-color: #20485a;
+}
+
+.resumo-chuva {
+    background-color: #1b6ca8;
+}
+
+.valor-umidade,
+.valor-chuva {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #f4f8f2;
+}
+
+.resumo-classificacao p {
+    font-weight: bold;
+    color: #A5D01B;
+}
+
+/* --- Tabela detalhada da semana --- */
+.tabela-semana {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabela-semana th,
+.tabela-semana td {
+    padding: 12px 15px;
+    border: 1px solid #bdc3c7;
+    text-align: center;
+}
+
+.tabela-semana th {
+    background-color: var(--green-strong, #1B8211);
+    color: var(--green-light, #122f05);
+    font-weight: 500;
+}
+
+.tabela-semana tr:nth-child(even) {
+    background-color: #89b87b;
+}
+
+.tabela-semana tr:nth-child(odd) {
+    background-color: #6e9464;
+}
+
+.tabela-semana tr:hover {
+    background-color: #a7dcbd;
+    transition: background-color 0.2s ease;
+}
+
+.tabela-semana .sol,
+.tabela-semana .nublado {
+    color: #042a13;
+    font-weight: bold;
+}
+
+.tabela-semana .cobertura-alta,
+.tabela-semana .cobertura-baixa {
+    color: #042a13;
+    font-weight: 500;
+}
