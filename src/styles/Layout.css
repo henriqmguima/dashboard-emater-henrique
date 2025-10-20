@@ -237,7 +237,7 @@ body {
     margin: 130px 0 0 10px;
     border-radius: 10px;
     box-shadow: 2px 2px 10px #1a82116b;
-
+    z-index: 999;
     /* rolagem interna se o conteúdo passar da tela */
 
 }
