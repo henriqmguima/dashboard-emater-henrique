@@ -86,7 +86,7 @@ h2 {
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px);  
 }
 
 .card h3 {

@@ -22,6 +22,9 @@ import "../styles/Layout.css";
 import "../styles/Index.css";
 import Carregando from "../components/Carregando";
 import Erro from "../components/Erro";
+import {
+    formatarDataParaDiaSemana, fetchVariaveisDia
+} from "../utils/dadosUtil.js";
 ChartJS.register(ChartDataLabels);
 
 ChartJS.register(
@@ -35,7 +38,7 @@ LineElement,
 BarElement
 );
 
-const variaveisDisponiveis = [
+/* const variaveisDisponiveis = [
 { nome: "apcpsfc", descricao: "Surface total precipitation (kg/m²)" },
 { nome: "dpt2m", descricao: "2m above ground dew point temperature (°C)" },
 { nome: "rh2m", descricao: "2m relative humidity (%)" },
@@ -83,15 +86,9 @@ export default function Agua({ bairros, dataExecucao, bairroSelecionado, setBair
 const { nomeBairro } = useParams();
 const bairro = bairros.find((b) => b.nome === bairroSelecionado);
 
-//const [dataExecucao, setDataExecucao] = useState("2025-10-05");
-//const [latitude] = useState(bairro.lat);
-//const [longitude] = useState(bairro.lng);
-
 const latitude = bairro?.lat;
 const longitude = bairro?.lng;
 
-//const [dadosHoje, setDadosHoje] = useState(null);
-//const [dadosSemana, setDadosSemana] = useState([]);
 const [dados, setDados] = useState(null);
 const [loading, setLoading] = useState(false);
 const [error, setError] = useState(null);
@@ -162,7 +159,59 @@ useEffect(() => {
     };
 
     buscarVariaveis();
-}, [latitude, longitude, dataExecucao]);
+}, [latitude, longitude, dataExecucao]); */
+
+export default function DadosPage ({ bairros, dataExecucao, bairroSelecionado, setBairroSelecionado }){
+    const { nomeBairro } = useParams();
+    const bairro = bairros.find((b) => b.nome === bairroSelecionado);
+
+    const latitude = bairro?.lat;
+    const longitude = bairro?.lng;
+    const token = import.meta.env.VITE_CLIMAPI_TOKEN;
+
+    const [dados, setDados] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);  
+    
+    useEffect(() => {
+    if (nomeBairro && nomeBairro !== bairroSelecionado){
+        setBairroSelecionado(nomeBairro)
+    }
+    }, [nomeBairro, bairroSelecionado, setBairroSelecionado]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if(!latitude || !longitude) return;
+            setLoading(true);
+            setError(null);
+
+            try{
+                const result = await fetchVariaveisDia(
+                    dataExecucao,
+                    latitude,
+                    longitude,
+                    token
+                );
+                setDados(result);
+            }catch(err){
+                console.log("Erro: ", err);
+                if(err.message === "DATA_INVALIDA"){
+                    setError("DATA_INVALIDA");
+                }else if(err instanceof TypeError && /fetch|network/i.test(err.message)){
+                    setError("ERRO_DE_CONEXAO");
+                }else{
+                    const match = String(err.message).match(/Erro\s+\w+:\s*(\d+)/);
+                    const codigo = match ? Number(match[1]) : null;
+                    setError(codigo);
+                }
+            }finally{
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [latitude, longitude, dataExecucao, token]);
+
 
 // === Render ===
 return (
@@ -174,15 +223,6 @@ return (
         <h1>Resumo dos Dados</h1>
         <h2>{bairroSelecionado}</h2>
         <div className="data-container">
-{/*             <label>
-            <span className="texto-data">Data de execução:</span>
-            <input
-                className="input-data"
-                type="date"
-                value={dataExecucao}
-                onChange={(e) => setDataExecucao(e.target.value)}
-            />
-            </label> */}
 
             <p className="texto-data" style={{ textAlign: "center" }}>
             {formatarDataParaDiaSemana(dataExecucao)}
@@ -201,24 +241,24 @@ return (
             </div>
         )}
 
-        {!error && !loading && (
+        {!error && !loading && dados && (
             <>
             <div>
                 <h3>Superfície</h3>
                 <div className="card-container card-container--4">
-                <div className="card">
+                <div className="card_agua">
                     <h4>🌧️ Precipitação total</h4>
                     <p className="texto-dados">{dados?.apcpsfc || 0} kg/m2</p>
                 </div>
-                <div className="card">
+                <div className="card_agua">
                     <h4>💧 Ponto de orvalho a 2m</h4>
                     <p className="texto-dados">{dados?.dpt2m || 0} °C</p>
                 </div>
-                <div className="card">
+                <div className="card_agua">
                     <h4>💦 Umidade relativa a 2m</h4>
                     <p className="texto-dados">{dados?.rh2m || 0} %</p>
                 </div>
-                <div className="card">
+                <div className="card_agua">
                     <h4>🌪️ Velocidade do vento</h4>
                     <p className="texto-dados">{dados?.gustsfc || 0} m/s</p>
                 </div>
@@ -226,15 +266,15 @@ return (
 
                 <h3>Cobertura de nuvens</h3>
                 <div className="card-container card-container--3">
-                <div className="card">
+                <div className="card_nuvens">
                     <h4>☁️ Nuvens altas</h4>
                     <p className="texto-dados">{dados?.hcdchcll || 0} %</p>
                 </div>
-                <div className="card">
+                <div className="card_nuvens">
                     <h4>🌥️ Nuvens médias</h4>
                     <p className="texto-dados">{dados?.mcdcmcll || 0} %</p>
                 </div>
-                <div className="card">
+                <div className="card_nuvens">
                     <h4>🌫️ Nuvens baixas</h4>
                     <p className="texto-dados">{dados?.lcdclcll || 0} %</p>
                 </div>
@@ -242,19 +282,19 @@ return (
 
                 <h3>Umidade volumétrica do solo</h3>
                 <div className="card-container card-container--3">
-                <div className="card">
+                <div className="card_solo">
                     <h4>🌱 0 a 10cm</h4>
                     <p className="texto-dados">
                     {dados?.soill0_10cm || 0} m³/m³
                     </p>
                 </div>
-                <div className="card">
+                <div className="card_solo">
                     <h4>🌿 10 a 40cm</h4>
                     <p className="texto-dados">
                     {dados?.soill10_40cm || 0} m³/m³
                     </p>
                 </div>
-                <div className="card">
+                <div className="card_solo">
                     <h4>🌾 40cm a 1m</h4>
                     <p className="texto-dados">
                     {dados?.soill40_100cm || 0} m³/m³
@@ -269,3 +309,4 @@ return (
     </div>
 );
 }
+    

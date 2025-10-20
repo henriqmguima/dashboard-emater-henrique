@@ -6,7 +6,7 @@ export default function Erro({ codigo }) {
 const erros = {
     401: {
     titulo: "Token Expirado",
-    descricao: "Limite de requisições no mês alcançado.",
+    descricao: "Limite de requisições no mês alcançado. Entre em contato com o IFSul pelo email: ch-coex@ifsul.edu.br",
     },
     429: {
     titulo: "Muitas Requisições",

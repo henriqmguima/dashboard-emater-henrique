@@ -32,15 +32,19 @@
     const resultados = await Promise.all(
         variaveisDisponiveis.map(async (v) => {
         const url = `https://api.cnptia.embrapa.br/climapi/v1/ncep-gfs/${v.nome}/${data}/${longitude}/${latitude}`;
-        try {
             const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-            if (!response.ok) throw new Error(`Erro: ${response.status}`);
+            if (!response.ok){
+                throw new Error(`Erro ${v.nome}: ${response.status} `);
+            }
+            
             const result = await response.json();
+
+            if (!Array.isArray(result) || result.length === 0) {
+                throw new Error("DATA_INVALIDA");
+            }
+
             return { nome: v.nome, dados: result };
-        } catch (err) {
-            console.error(`Erro fetch ${v.nome}:`, err);
-            return { nome: v.nome, dados: [] };
-        }
+
         })
     );
 
