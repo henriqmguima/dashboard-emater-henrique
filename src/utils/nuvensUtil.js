@@ -48,6 +48,10 @@ export const fetchDataDia = async (
       }
 
       const result = await response.json();
+      if (!Array.isArray(result) || result.length === 0) {
+        throw new Error("DATA_INVALIDA");
+      }
+
       return { nome: v.nome, dados: result };
     })
   );
