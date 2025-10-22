@@ -218,7 +218,7 @@ return (
     <div className="layout-emater">
 {/*     <Header /> */}
     <div className="layout-inferior">
-        <Aside />
+        <div className="aside_space"><Aside /></div>
         <div className="conteudo-principal" style={{ padding: "20px" }}>
         <h1>Resumo dos Dados</h1>
         <h2>{bairroSelecionado}</h2>

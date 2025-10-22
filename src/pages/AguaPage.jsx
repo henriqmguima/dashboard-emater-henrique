@@ -177,7 +177,7 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
         <div className="layout-emater">
 {/*             <Header /> */}
             <div className="layout-inferior">
-                <Aside />
+                <div className="aside_space"><Aside /></div>
                 <div className="conteudo-principal">
                     <h1>ClimAPI - Água</h1>
                     <h2>{bairroSelecionado}</h2>

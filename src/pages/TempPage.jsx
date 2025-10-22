@@ -128,7 +128,7 @@ export default function TempPage({ bairros, dataExecucao, bairroSelecionado, set
     <div className="layout-emater">
       {/* <Header /> */}
       <div className="layout-inferior">
-        <Aside />
+        <div className="aside_space"><Aside /></div>
         <div className="conteudo-principal">
           <h1>Temperatura e Condição do Ar</h1>
           <h2>{bairroSelecionado}</h2>
