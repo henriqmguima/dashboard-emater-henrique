@@ -14,7 +14,7 @@ const bairros = [
   { nome: "Capororoca", lat: -30.0412793, lng: -51.6467932 },
   { nome: "Granja Carola", lat: -29.9554248, lng: -51.5556481 },
   { nome: "Guaíba City", lat: -30.0016011, lng: -51.4928193 },
-  { nome: "Fazenda Umbu", lat: -29.9956883, lng: -51.6268506 },
+  { nome: "Fazenda Umbu", lat: -29.9814714, lng: -51.541597 },
 ];
 
 function AppContent() {

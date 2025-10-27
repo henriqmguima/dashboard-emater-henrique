@@ -16,6 +16,8 @@ import {
 //import Header from "../components/Header";
 import Aside from "../components/Aside";
 import "../styles/NuvensPage.css";
+import Carregando from "../components/Carregando";
+import Erro from "../components/Erro";
 
 import {
   fetchDataDia,
@@ -42,9 +44,6 @@ export default function NuvensPage({ bairros, dataExecucao, bairroSelecionado, s
   const { nomeBairro } = useParams();
   const bairro = bairros.find((b) => b.nome === bairroSelecionado);
 
-  //const hoje = new Date().toISOString().split("T")[0];
-
-  //const [selected, setSelected] = useState(bairro);
   const [dados, setDados] = useState(null);
   const [dadosSemana, setDadosSemana] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -75,6 +74,9 @@ export default function NuvensPage({ bairros, dataExecucao, bairroSelecionado, s
     setLoading(true);
     setError(null);
 
+    setDados(null);
+    setDadosSemana([]);
+
     try {
       const dadosHoje = await fetchDataDia(
         dataExecucao,
@@ -95,9 +97,21 @@ export default function NuvensPage({ bairros, dataExecucao, bairroSelecionado, s
       );
       setDadosSemana(semana);
     } catch (err) {
-      setError(err.message || "Erro ao buscar dados");
-      setDados(null);
-      setDadosSemana([]);
+            console.error("Erro ao buscar dados:", err);
+
+            if (err.message === "DATA_INVALIDA") {
+                setError("DATA_INVALIDA");
+            } else if (err.message === "COORDENADAS_INVALIDAS") {
+                setError("COORDENADAS_INVALIDAS");
+            } else if (err instanceof TypeError && /fetch|network/i.test(err.message)) {
+                setError("ERRO_DE_CONEXAO");
+            } else {
+                const match = String(err.message).match(/Erro(?:\s+\w+)?:\s*(\d+)/);
+                const codigo = match ? Number(match[1]) : "ERRO_DESCONHECIDO";
+                setError(codigo);
+            }
+            setDados(null);
+            setDadosSemana([]);
     } finally {
       setLoading(false);
     }
@@ -220,15 +234,24 @@ export default function NuvensPage({ bairros, dataExecucao, bairroSelecionado, s
     <div className="layout-emater">
       {/* <Header /> */}
       <div className="layout-inferior">
-        <Aside />
+        <div className="aside_space"><Aside /></div>
         <div className="conteudo-principal">
           <h1>Nuvens e Sol</h1>
           <h2>{bairroSelecionado}</h2>
 
-          {loading && <p className="loading">Carregando...</p>}
-          {error && <p className="error">{error}</p>}
+        {loading && (
+            <div className="info-container">
+            <Carregando />
+            </div>
+        )}
 
-          {!error && dados && (
+        {error && (
+            <div className="info-container">
+            <Erro codigo={error} />
+            </div>
+        )}
+
+          {!error && !loading && Array.isArray(dados) && dados.length > 0 &&  (
             <>
               {/* === Cards de Resumo === */}
               <div className="cards-resumo">

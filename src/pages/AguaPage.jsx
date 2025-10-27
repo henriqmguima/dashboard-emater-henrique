@@ -18,6 +18,8 @@ import {
 import Header from "../components/Header";
 import Aside from "../components/Aside";
 import "../styles/AguaPage.css";
+import Carregando from "../components/Carregando";
+import Erro from "../components/Erro";
 
 import {
     fetchDataDia,
@@ -46,8 +48,6 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
     // 🗓️ Data padrão = dia anterior
     const ontem = new Date();
     ontem.setDate(ontem.getDate() - 1);
-    //const dataFormatada = ontem.toISOString().split("T")[0];
-    //const [dataExecucao, setDataExecucao] = useState(dataFormatada);
 
     useEffect(() => {
     if (nomeBairro && nomeBairro !== bairroSelecionado){
@@ -73,6 +73,9 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
         setLoading(true);
         setError(null);
 
+        setDados(null);
+        setDadosSemana([]);
+
         try {
             const dadosHoje = await fetchDataDia(
                 dataExecucao,
@@ -81,6 +84,11 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
                 token,
                 variaveisDisponiveis
             );
+
+            if (!Array.isArray(dadosHoje) || dadosHoje.length === 0) {
+                throw new Error("DATA_INVALIDA");
+            }
+
             setDados(dadosHoje);
 
             const semana = await fetchDadosSemana(
@@ -93,7 +101,22 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
             );
             setDadosSemana(semana);
         } catch (err) {
-            setError(err.message || "Erro ao buscar dados");
+            
+            console.error("Erro ao buscar dados da Água:", err);
+
+            if (err.message === "DATA_INVALIDA") {
+                setError("DATA_INVALIDA");
+            } else if (err.message === "COORDENADAS_INVALIDAS") {
+                setError("COORDENADAS_INVALIDAS");
+            } else if (err instanceof TypeError && /fetch|network/i.test(err.message)) {
+                setError("ERRO_DE_CONEXAO");
+            } else {
+                const match = String(err.message).match(/Erro(?:\s+\w+)?:\s*(\d+)/);
+                const codigo = match ? Number(match[1]) : "ERRO_DESCONHECIDO";
+                setError(codigo);
+            }
+            setDados(null);
+            setDadosSemana([]);
         } finally {
             setLoading(false);
         }
@@ -154,15 +177,24 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
         <div className="layout-emater">
 {/*             <Header /> */}
             <div className="layout-inferior">
-                <Aside />
+                <div className="aside_space"><Aside /></div>
                 <div className="conteudo-principal">
                     <h1>ClimAPI - Água</h1>
                     <h2>{bairroSelecionado}</h2>
 
-                    {loading && <p className="loading">Carregando...</p>}
-                    {error && <p className="error">{error}</p>}
+                {loading && (
+                    <div className="info-container">
+                    <Carregando />
+                    </div>
+                )}
 
-                {dados && (
+                {error && (
+                    <div className="info-container">
+                    <Erro codigo={error} />
+                    </div>
+                )}
+
+                {!error && !loading && Array.isArray(dados) && dados.length > 0 &&  (
                 <div>
                     <div className="cards-resumo">
                     <div className="card resumo-umidade">
@@ -226,7 +258,8 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
                 )}
         </div>
     </div>
-  </div>
+</div>
 );
 }
+
 

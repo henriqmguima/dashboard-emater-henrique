@@ -4,6 +4,10 @@ font-size: 35px;
 text-align: center;
 }
 
+h4 {
+  font-size: 22px;
+}
+
 .texto-dados {
 color: #a5d01b;
 font-weight: 600;
@@ -36,8 +40,70 @@ justify-content: center;
 margin-top: 30px;
 }
 
-.card {
+.card_agua:hover {
+  transform: translateY(-5px);  
+}
+
+.card_agua {
 text-align: center;
+background-color: #19C388;
+color: #123c1a;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+text-align: center;
+transition: transform 0.2s ease;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.card_agua p{
+color: #123c1a;
+}
+
+.card_nuvens:hover {
+  transform: translateY(-5px);  
+}
+
+.card_nuvens {
+text-align: center;
+background-color: #17838d;
+color: #f4f8f2;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+text-align: center;
+transition: transform 0.2s ease;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.card_nuvens p{
+color: #f4f8f2;
+}
+
+.card_solo:hover {
+  transform: translateY(-5px);  
+}
+
+.card_solo {
+text-align: center;
+background-color: #A5D01B;
+color: #101d12;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+text-align: center;
+transition: transform 0.2s ease;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.card_solo p{
+color: #101d12;
 }
 
 .card-container--4 {
