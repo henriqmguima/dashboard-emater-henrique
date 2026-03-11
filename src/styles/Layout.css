@@ -11,7 +11,6 @@ body {
     align-items: center;
     padding: 12px 20px;
     flex-wrap: wrap;
-    width: 100%;
 }
 
 .oculto {
@@ -193,7 +192,9 @@ body {
 /* ASIDE */
 .aside_space {
     width: 90px;
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
 }
 
 .aside-emater {
@@ -203,11 +204,9 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 12px 0;
-    height: auto;
-    position: fixed;
-    overflow-y: auto;
-    margin: 130px 0 0 10px;
     border-radius: 10px;
+    padding-bottom: 20px;
+    margin-left: 15px;
     box-shadow: 2px 2px 10px #1a82116b;
     z-index: 999;
 }
@@ -346,6 +345,7 @@ input[type="date"].input-header::-webkit-calendar-picker-indicator:hover {
 
 /* Até 600px */
 @media (max-width: 600px) {
+
     .dropdown-selected,
     .dropdown-item {
         font-size: 13px;
@@ -374,6 +374,7 @@ input[type="date"].input-header::-webkit-calendar-picker-indicator:hover {
         min-width: 160px;
     }
 
+
     .input-header {
         font-size: 12px;
         padding: 6px 8px;
@@ -397,4 +398,3 @@ input[type="date"].input-header::-webkit-calendar-picker-indicator:hover {
         padding: 0 0 80px 0;
     }
 }
-    
