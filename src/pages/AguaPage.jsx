@@ -62,7 +62,43 @@ export default function AguaPage({ bairros, dataExecucao, bairroSelecionado, set
 
     const latitude = bairro?.lat;
     const longitude = bairro?.lng;
-    const token = import.meta.env.VITE_CLIMAPI_TOKEN;
+
+    // === Seleção de token automático (muda só ao recarregar a página) ===
+    const tokensString = import.meta.env.VITE_CLIMAPI_TOKENS || '';
+    const tokensArray = tokensString.split(',').map(t => t.trim());
+
+    // Função auxiliar para pegar e salvar índice
+    function getNextToken() {
+        let currentIndex = parseInt(localStorage.getItem('lastTokenIndex')) || 0;
+        const token = tokensArray[currentIndex];
+
+        // Calcula o próximo índice cíclico
+        const nextIndex = (currentIndex + 1) % tokensArray.length;
+        localStorage.setItem('lastTokenIndex', nextIndex);
+
+        return { token, nextIndex };
+    }
+
+    // Se já existe um token nesta sessão, usa o mesmo
+    // Se for reload, gera um novo
+    let tokenInfo = sessionStorage.getItem('currentToken');
+
+    if (!tokenInfo) {
+        const { token, nextIndex } = getNextToken();
+        sessionStorage.setItem('currentToken', token);
+
+        // Log informativo
+        console.log('🔑 Token atual:', token);
+        console.log('➡️ Próximo token será:', tokensArray[nextIndex]);
+    } else {
+        console.log('🔑 Token atual (mesmo da sessão):', tokenInfo);
+
+        const nextIndex = parseInt(localStorage.getItem('lastTokenIndex')) || 0;
+        console.log('➡️ Próximo token será:', tokensArray[nextIndex]);
+    }
+
+    const token = sessionStorage.getItem('currentToken');
+
 
     const variaveisDisponiveis = [
         { nome: "soill0_10cm", descricao: "Umidade do Solo (0–10 cm)" },
